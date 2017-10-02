@@ -13,7 +13,7 @@ public interface RetrofitMaps {
      * Retrofit get annotation with our URL
      * And our method that will return us details of student.
      */
-    @GET("api/place/nearbysearch/json?sensor=true&key=AIzaSyDp1pXBwEVFQ_6FpwRENR09EPi3Co6yrT8")
+    @GET("api/place/nearbysearch/json?sensor=true&key=AIzaSyA1GDN-skUP2mxHOAJiaJiIdpvKMKJuJEA")
     Call<Example> getNearbyPlaces(@Query("type") String type, @Query("location") String location, @Query("radius") int radius);
 
 }

@@ -2,7 +2,6 @@ package com.example.user.tourassistant.google_place;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.location.*;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -34,10 +33,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
@@ -76,7 +72,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-       // build_retrofit_and_get_response("restaurant");
+      //  build_retrofit_and_get_response("restaurant");
     }
 
     private boolean isGooglePlayServicesAvailable() {
@@ -111,32 +107,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.setMyLocationEnabled(true);
         }
 
-//        Button btnRestaurant = (Button) findViewById(R.id.btnRestaurant);
-//        btnRestaurant.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                build_retrofit_and_get_response("restaurant");
-//            }
-//        });
-//
-//        Button btnHospital = (Button) findViewById(R.id.btnHospital);
-//        btnHospital.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                build_retrofit_and_get_response("hospital");
-//            }
-//        });
-//
-//        Button btnSchool = (Button) findViewById(R.id.btnSchool);
-//        btnSchool.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                build_retrofit_and_get_response("school");
-//            }
-//        });
+        Button btnRestaurant = (Button) findViewById(R.id.btnRestaurant);
+        btnRestaurant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                build_retrofit_and_get_response("restaurant");
+            }
+        });
+
+        Button btnHospital = (Button) findViewById(R.id.btnHospital);
+        btnHospital.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                build_retrofit_and_get_response("hospital");
+            }
+        });
+
+        Button btnSchool = (Button) findViewById(R.id.btnSchool);
+        btnSchool.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                build_retrofit_and_get_response("school");
+            }
+        });
     }
 
     private void build_retrofit_and_get_response(String type) {
+
 
         String url = "https://maps.googleapis.com/maps/";
 
@@ -155,6 +153,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 try {
                     mMap.clear();
                     // This loop will go through all the results and add marker on each location.
+                    Toast.makeText(getApplication(),""+response.body().getResults().size(),Toast.LENGTH_LONG).show();
                     for (int i = 0; i < response.body().getResults().size(); i++) {
                         Double lat = response.body().getResults().get(i).getGeometry().getLocation().getLat();
                         Double lng = response.body().getResults().get(i).getGeometry().getLocation().getLng();

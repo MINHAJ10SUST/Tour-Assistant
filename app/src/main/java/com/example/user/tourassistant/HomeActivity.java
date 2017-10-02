@@ -1,5 +1,6 @@
 package com.example.user.tourassistant;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -7,9 +8,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.user.tourassistant.google_place.MapsActivity;
+
 public class HomeActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
+
+
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -22,6 +28,8 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_dashboard:
                     mTextMessage.setText(R.string.title_mytrip);
+                    Intent intent=new Intent(HomeActivity.this,MapsActivity.class);
+                    startActivity(intent);
                     return true;
                 case R.id.navigation_notifications:
                     mTextMessage.setText(R.string.title_tline);
