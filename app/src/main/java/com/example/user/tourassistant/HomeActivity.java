@@ -36,15 +36,11 @@ public class HomeActivity extends AppCompatActivity {
                     ft1.commit();
                     return true;
                 case R.id.navigation_dashboard:
-                    FragmentManager fm2 = getSupportFragmentManager();
-                    FragmentTransaction ft2 = fm2.beginTransaction();
-                    SigninFragment signinFragment = new SigninFragment();
-                    ft2.replace(R.id.homeFragmentView,signinFragment);
-                    ft2.addToBackStack(null);
-                    ft2.commit();
+                    Intent intentLogin=new Intent(HomeActivity.this,MainActivity.class);
+                    startActivity(intentLogin);
                     return true;
                 case R.id.navigation_notifications:
-                    Intent intent=new Intent(HomeActivity.this,MainActivity.class);
+                    Intent intent=new Intent(HomeActivity.this,MapsActivity.class);
                     startActivity(intent);
                     return true;
             }
