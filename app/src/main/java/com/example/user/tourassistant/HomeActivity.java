@@ -7,18 +7,17 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
-
+import android.view.View;
 import com.example.user.tourassistant.google_place.MapsActivity;
+import com.example.user.tourassistant.page_fragment.BlogFragment;
 import com.example.user.tourassistant.page_fragment.HomeFragment;
 import com.example.user.tourassistant.page_fragment.SigninFragment;
+import com.firebase.ui.auth.AuthUI;
 
 public class HomeActivity extends AppCompatActivity {
-
-    //private TextView mTextMessage;
-
-
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -36,12 +35,20 @@ public class HomeActivity extends AppCompatActivity {
                     ft1.commit();
                     return true;
                 case R.id.navigation_dashboard:
-                    Intent intentLogin=new Intent(HomeActivity.this,MainActivity.class);
-                    startActivity(intentLogin);
+                    FragmentManager fm2 = getSupportFragmentManager();
+                    FragmentTransaction ft2 = fm2.beginTransaction();
+                    SigninFragment signinFragment = new SigninFragment();
+                    ft2.replace(R.id.homeFragmentView,signinFragment);
+                    ft2.addToBackStack(null);
+                    ft2.commit();
                     return true;
                 case R.id.navigation_notifications:
-                    Intent intent=new Intent(HomeActivity.this,MapsActivity.class);
-                    startActivity(intent);
+                    FragmentManager fm3 = getSupportFragmentManager();
+                    FragmentTransaction ft3 = fm3.beginTransaction();
+                    BlogFragment blogFragment = new BlogFragment();
+                    ft3.replace(R.id.homeFragmentView,blogFragment);
+                    ft3.addToBackStack(null);
+                    ft3.commit();
                     return true;
             }
             return false;
@@ -54,7 +61,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        //mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -66,4 +72,31 @@ public class HomeActivity extends AppCompatActivity {
         ft.commit();
     }
 
+    public void showHotel(View view) {
+        Intent intentMap=new Intent(HomeActivity.this,MapsActivity.class);
+        startActivity(intentMap);
+    }
+
+    public void showWeather(View view) {
+        Intent intentWeather=new Intent(HomeActivity.this,TestWeather.class);
+        startActivity(intentWeather);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.sign_out_menu:
+                AuthUI.getInstance().signOut(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

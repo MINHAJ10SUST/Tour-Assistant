@@ -1,6 +1,8 @@
 package com.example.user.tourassistant.google_place;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -72,7 +74,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-      //  build_retrofit_and_get_response("restaurant");
+
     }
 
     private boolean isGooglePlayServicesAvailable() {
@@ -106,6 +108,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
+
 
         Button btnRestaurant = (Button) findViewById(R.id.btnRestaurant);
         btnRestaurant.setOnClickListener(new View.OnClickListener() {
@@ -226,6 +229,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //Place current location marker
         latitude = location.getLatitude();
         longitude = location.getLongitude();
+        // sh p
+//        SharedPreferences sharedPref = MapsActivity.this.getPreferences(Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPref.edit();
+//        editor.putFloat(getString(R.string.splat), latitude);
+//        editor.commit();
+
+
+
+        build_retrofit_and_get_response("restaurant");
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);

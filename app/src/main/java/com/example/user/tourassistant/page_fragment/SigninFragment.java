@@ -1,9 +1,11 @@
 package com.example.user.tourassistant.page_fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.user.tourassistant.R;
 import com.firebase.ui.auth.AuthUI;
@@ -20,7 +23,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 
 public class SigninFragment extends Fragment {
-    private static final String TAG = "MainActivity";
     public static final String ANONYMOUS = "anonymous";
     public static final int RC_SIGN_IN = 1;
     private ProgressBar mProgressBar;
@@ -31,8 +33,17 @@ public class SigninFragment extends Fragment {
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
+
+
+
     public SigninFragment() {
-        // Required empty public constructor
+
 
     }
 
@@ -45,9 +56,22 @@ public class SigninFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
 
+
+
+
+        final View v = inflater.inflate(R.layout.fragment_signin, container, false);
+
+
+        return v;
+    }
+
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         mUsername = ANONYMOUS;
         mFirebaseAuth = FirebaseAuth.getInstance();
 
@@ -68,55 +92,38 @@ public class SigninFragment extends Fragment {
                                     .setProviders(
                                             AuthUI.EMAIL_PROVIDER,
                                             AuthUI.GOOGLE_PROVIDER)
+                                    .setTheme(R.style.Theme_AppCompat_Transparent)
                                     .build(),
                             RC_SIGN_IN);
                 }
             }
         };
 
-
-
-
-        final View v = inflater.inflate(R.layout.fragment_signin, container, false);
-
-
-        return v;
     }
-
-
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        mFirebaseAuth.addAuthStateListener(mAuthStateListener);
-//    }
-//
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        if (mAuthStateListener != null) {
-//            mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
-//        }
-//
-//    }
-//
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.main_menu, menu);
-//        return true;
-//    }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.sign_out_menu:
-                AuthUI.getInstance().signOut(getActivity());
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+    public void onStart() {
+        super.onStart();
+        mFirebaseAuth.addAuthStateListener(mAuthStateListener);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (mAuthStateListener != null) {
+            mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
+        }
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+    }
+
+
 
     private void onSignedInInitialize(String username) {
         mUsername = username;
@@ -125,7 +132,7 @@ public class SigninFragment extends Fragment {
 
     private void onSignedOutCleanup() {
         mUsername = ANONYMOUS;
-        //mMessageAdapter.clear();
+
 
     }
 

@@ -12,6 +12,13 @@ public interface RetrofitMaps {
     /*
      * Retrofit get annotation with our URL
      * And our method that will return us details of student.
+     *  https://maps.googleapis.com/maps/
+     *  api/place/nearbysearch/json?
+     *  location=-33.8670522,151.1957362
+     *  &&radius=100
+     *  &sensor=true
+     *  &types=food
+     *  &key=YOUR_API_KEY
      */
     @GET("api/place/nearbysearch/json?sensor=true&key=AIzaSyA1GDN-skUP2mxHOAJiaJiIdpvKMKJuJEA")
     Call<Example> getNearbyPlaces(@Query("type") String type, @Query("location") String location, @Query("radius") int radius);
