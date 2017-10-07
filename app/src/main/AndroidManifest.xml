@@ -34,15 +34,23 @@
         <activity
             android:name=".google_place.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".HomeActivity" >
-
+        <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".firebase.DatabaseActivity">
 
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
+        <activity android:name=".google_place.AllmapActivity"></activity>
     </application>
 
 </manifest>

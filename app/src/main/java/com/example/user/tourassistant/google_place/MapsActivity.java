@@ -175,6 +175,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         // move map camera
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                         mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+                       // mMap.animateCamera(CameraUpdateFactory.);
                     }
                 } catch (Exception e) {
                     Log.d("onResponse", "There is an error");
@@ -252,6 +253,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //move map camera
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+
 
         Log.d("onLocationChanged", String.format("latitude:%.3f longitude:%.3f", latitude, longitude));
 

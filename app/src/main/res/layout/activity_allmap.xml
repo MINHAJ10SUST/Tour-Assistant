@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <fragment android:id="@+id/map"
+    <fragment android:id="@+id/mapall"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"
@@ -25,19 +25,19 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/btnRestaurant"
+            android:id="@+id/btnRestaurantall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nearby Restaurants" />
 
         <Button
-            android:id="@+id/btnHospital"
+            android:id="@+id/btnHospitalall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nearby Hospitals" />
 
         <Button
-            android:id="@+id/btnSchool"
+            android:id="@+id/btnSchoolall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nearby Schools" />

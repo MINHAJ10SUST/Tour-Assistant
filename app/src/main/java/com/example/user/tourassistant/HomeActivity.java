@@ -7,17 +7,34 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.user.tourassistant.activities.SampleActivityBase;
+import com.example.user.tourassistant.google_place.AllmapActivity;
 import com.example.user.tourassistant.google_place.MapsActivity;
 import com.example.user.tourassistant.page_fragment.BlogFragment;
 import com.example.user.tourassistant.page_fragment.HomeFragment;
 import com.example.user.tourassistant.page_fragment.SigninFragment;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends SampleActivityBase implements PlaceSelectionListener {
+
+
+    private TextView mPlaceDetailsText;
+
+    private TextView mPlaceAttribution;
+    public int sbFlag=0;
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -70,6 +87,20 @@ public class HomeActivity extends AppCompatActivity {
         ft.add(R.id.homeFragmentView,homeFragment);
         ft.addToBackStack(null);
         ft.commit();
+
+
+
+
+        if(sbFlag==1 ){
+            // Retrieve the PlaceAutocompleteFragment.
+            PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
+                    getFragmentManager().findFragmentById(R.id.autocomplete_fragment);
+            autocompleteFragment.setOnPlaceSelectedListener(this);
+
+            //mPlaceDetailsText = (TextView) findViewById(R.id.place_details);
+            mPlaceAttribution = (TextView) findViewById(R.id.place_attribution);
+        }
+
     }
 
     public void showHotel(View view) {
@@ -98,5 +129,22 @@ public class HomeActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onPlaceSelected(Place place) {
+        CharSequence attributions = place.getAttributions();
+        if (!TextUtils.isEmpty(attributions)) {
+            mPlaceAttribution.setText(Html.fromHtml(attributions.toString()));
+        } else {
+            mPlaceAttribution.setText("");
+        }
+    }
+
+    @Override
+    public void onError(Status status) {
+
+        Toast.makeText(this, "Place selection failed: " + status.getStatusMessage(),
+                Toast.LENGTH_SHORT).show();
     }
 }

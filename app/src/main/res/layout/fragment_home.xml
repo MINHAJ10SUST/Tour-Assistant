@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     tools:context="com.example.user.tourassistant.page_fragment.HomeFragment">
 
+
+
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
