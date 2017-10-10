@@ -2,6 +2,7 @@ package com.example.user.tourassistant.page_fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,6 +14,9 @@ import android.widget.EditText;
 
 import com.example.user.tourassistant.R;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 
 
 /**
@@ -40,17 +44,6 @@ public class HomeFragment extends Fragment {
 
 
         return v;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.sign_out_menu:
-                AuthUI.getInstance().signOut(getActivity());
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
 

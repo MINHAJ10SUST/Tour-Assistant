@@ -42,14 +42,10 @@ public class AllmapActivity extends FragmentActivity implements OnMapReadyCallba
     String type;
     double latitude;
     double longitude;
-    private int PROXIMITY_RADIUS = 10000;
+    private int PROXIMITY_RADIUS = 5000;
     Marker mCurrLocationMarker;
 
-    public AllmapActivity(String type, double latitude, double longitude) {
-        this.type = type;
-        this.latitude = latitude;
-        this.longitude = longitude;
-    }
+
 
     public AllmapActivity() {
     }
@@ -62,6 +58,11 @@ public class AllmapActivity extends FragmentActivity implements OnMapReadyCallba
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.mapall);
         mapFragment.getMapAsync(this);
+
+        Bundle bundle=getIntent().getExtras();
+        type=bundle.getString("type");
+        latitude=bundle.getDouble("latitude");
+        longitude=bundle.getDouble("longitude");
 
         build_retrofit_and_get_response(type,latitude,longitude);
     }
@@ -105,7 +106,7 @@ public class AllmapActivity extends FragmentActivity implements OnMapReadyCallba
                         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                         // move map camera
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+                        mMap.animateCamera(CameraUpdateFactory.zoomTo(17));
                         // mMap.animateCamera(CameraUpdateFactory.);
                     }
                 } catch (Exception e) {

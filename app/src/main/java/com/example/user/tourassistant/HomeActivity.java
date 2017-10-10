@@ -13,28 +13,47 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.user.tourassistant.activities.Log;
 import com.example.user.tourassistant.activities.SampleActivityBase;
 import com.example.user.tourassistant.google_place.AllmapActivity;
+import com.example.user.tourassistant.google_place.Example;
 import com.example.user.tourassistant.google_place.MapsActivity;
+import com.example.user.tourassistant.google_place.RetrofitMaps;
 import com.example.user.tourassistant.page_fragment.BlogFragment;
 import com.example.user.tourassistant.page_fragment.HomeFragment;
 import com.example.user.tourassistant.page_fragment.SigninFragment;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
-import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.maps.model.LatLng;
 
-public class HomeActivity extends SampleActivityBase implements PlaceSelectionListener {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+public class HomeActivity extends SampleActivityBase {
 
 
-    private TextView mPlaceDetailsText;
+    private Button homepageCityBt;
+    private ImageView homeImage;
+    private String type="restaurant";
+    double latitude=23.777176;
+    double longitude=90.399452;
 
-    private TextView mPlaceAttribution;
     public int sbFlag=0;
+    private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -44,12 +63,12 @@ public class HomeActivity extends SampleActivityBase implements PlaceSelectionLi
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    FragmentManager fm1 = getSupportFragmentManager();
-                    FragmentTransaction ft1 = fm1.beginTransaction();
+                    FragmentManager fm = getSupportFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
                     HomeFragment homeFragment = new HomeFragment();
-                    ft1.replace(R.id.homeFragmentView,homeFragment);
-                    ft1.addToBackStack(null);
-                    ft1.commit();
+                    ft.replace(R.id.homeFragmentView,homeFragment);
+                    ft.addToBackStack(null);
+                    ft.commit();
                     return true;
                 case R.id.navigation_dashboard:
                     FragmentManager fm2 = getSupportFragmentManager();
@@ -91,26 +110,64 @@ public class HomeActivity extends SampleActivityBase implements PlaceSelectionLi
 
 
 
-        if(sbFlag==1 ){
-            // Retrieve the PlaceAutocompleteFragment.
-            PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
-                    getFragmentManager().findFragmentById(R.id.autocomplete_fragment);
-            autocompleteFragment.setOnPlaceSelectedListener(this);
 
-            //mPlaceDetailsText = (TextView) findViewById(R.id.place_details);
-            mPlaceAttribution = (TextView) findViewById(R.id.place_attribution);
-        }
 
     }
 
     public void showHotel(View view) {
-        Intent intentMap=new Intent(HomeActivity.this,MapsActivity.class);
+        Intent intentMap=new Intent(HomeActivity.this,AllmapActivity.class);
+        intentMap.putExtra("latitude", latitude);
+        intentMap.putExtra("longitude",longitude);
+        intentMap.putExtra("type",type);
         startActivity(intentMap);
     }
 
-    public void showWeather(View view) {
-        Intent intentWeather=new Intent(HomeActivity.this,TestWeather.class);
-        startActivity(intentWeather);
+    public void showWeather(View view) throws GooglePlayServicesNotAvailableException, GooglePlayServicesRepairableException {
+        openAutocompleteActivity();
+    }
+
+    private void openAutocompleteActivity() {
+        try {
+
+            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
+                    .build(this);
+            startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
+        } catch (GooglePlayServicesRepairableException e) {
+
+            GoogleApiAvailability.getInstance().getErrorDialog(this, e.getConnectionStatusCode(),
+                    0 /* requestCode */).show();
+        } catch (GooglePlayServicesNotAvailableException e) {
+
+            String message = "Google Play Services is not available: " +
+                    GoogleApiAvailability.getInstance().getErrorString(e.errorCode);
+
+
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Check that the result was from the autocomplete widget.
+        if (requestCode == REQUEST_CODE_AUTOCOMPLETE) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlaceAutocomplete.getPlace(this, data);
+                LatLng queriedLocation = place.getLatLng();
+                homepageCityBt=(Button) findViewById(R.id.HomepageCityBt);
+                homepageCityBt.setText(place.getName());
+                latitude=queriedLocation.latitude;
+                longitude=queriedLocation.longitude;
+                getGooglePlaceInfo("restaurant", latitude,longitude);
+                CharSequence attributions = place.getAttributions();
+
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                Status status = PlaceAutocomplete.getStatus(this, data);
+
+            } else if (resultCode == RESULT_CANCELED) {
+
+            }
+        }
     }
 
     @Override
@@ -131,20 +188,45 @@ public class HomeActivity extends SampleActivityBase implements PlaceSelectionLi
         }
     }
 
-    @Override
-    public void onPlaceSelected(Place place) {
-        CharSequence attributions = place.getAttributions();
-        if (!TextUtils.isEmpty(attributions)) {
-            mPlaceAttribution.setText(Html.fromHtml(attributions.toString()));
-        } else {
-            mPlaceAttribution.setText("");
-        }
+
+    public void getPlace(View view) throws GooglePlayServicesNotAvailableException, GooglePlayServicesRepairableException {
+        openAutocompleteActivity();
     }
 
-    @Override
-    public void onError(Status status) {
+    public void getGooglePlaceInfo(String type, double latitude,double longitude){
 
-        Toast.makeText(this, "Place selection failed: " + status.getStatusMessage(),
-                Toast.LENGTH_SHORT).show();
+        String url = "https://maps.googleapis.com/maps/";
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        RetrofitMaps service = retrofit.create(RetrofitMaps.class);
+        Call<Example> call=service.getNearbyPlaces(type,latitude+","+longitude,10000);
+        call.enqueue(new Callback<Example>() {
+            @Override
+            public void onResponse(Call<Example> call, Response<Example> response) {
+
+                String placeName = response.body().getResults().get(0).getName();
+                homeImage=findViewById(R.id.homeImage);
+                if(response.body().getResults().get(0).getPhotos().get(0).getPhotoReference()!=null) {
+                    String photoUrl = String.format("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + response.body().getResults().get(0).getPhotos().get(0).getPhotoReference() + "&key=AIzaSyA1GDN-skUP2mxHOAJiaJiIdpvKMKJuJEA");
+                    Glide.with(getApplicationContext()).load(photoUrl).asBitmap()
+                            .error(R.drawable.coxbazer).centerCrop().into(homeImage);
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<Example> call, Throwable t) {
+
+            }
+        });
+
+
+
     }
+
 }

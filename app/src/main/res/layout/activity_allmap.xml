@@ -24,28 +24,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btnRestaurantall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nearby Restaurants" />
 
-        <Button
-            android:id="@+id/btnHospitalall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nearby Hospitals" />
-
-        <Button
-            android:id="@+id/btnSchoolall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nearby Schools" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?attr/actionModeCloseDrawable" />
 
         <TextView
             android:id="@+id/tv_lat"
