@@ -120,7 +120,7 @@ public class MomentFragment extends Fragment {
 
                 viewHolder.setTitle(model.getTitle());
                 viewHolder.setDesc(model.getDesc());
-                viewHolder.setImage(getApplicationContext(),model.getImage());
+                viewHolder.setImage(getActivity(),model.getImage());
                 viewHolder.setUserName(model.getUserName());
             }
         };

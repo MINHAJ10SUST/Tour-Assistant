@@ -144,13 +144,14 @@ public class AddMomentFragment extends Fragment {
                             newPost.child("title").setValue(title);
                             newPost.child("desc").setValue(description);
                             newPost.child("image").setValue(downloadUrl.toString());
+                            newPost.child("userId").setValue("minhaj");
 
-//                            FragmentManager fm3 = getActivity().getSupportFragmentManager();
-//                            FragmentTransaction ft3 = fm3.beginTransaction();
-//                            MomentFragment momentFragment = new MomentFragment();
-//                            ft3.replace(R.id.homeFragmentView,momentFragment);
-//                            ft3.addToBackStack(null);
-//                            ft3.commit();
+                            FragmentManager fm3 = getActivity().getSupportFragmentManager();
+                            FragmentTransaction ft3 = fm3.beginTransaction();
+                            MomentFragment momentFragment = new MomentFragment();
+                            ft3.replace(R.id.homeFragmentView,momentFragment);
+                            ft3.addToBackStack(null);
+                            ft3.commit();
 
 
 
