@@ -1,0 +1,33 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.user.tourassistant.page_fragment.AddExpenseFragment">
+
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <EditText
+    android:id="@+id/Expense_DetailsET"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Expense Details"/>
+    <EditText
+    android:id="@+id/Expense_AmountET"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Expense Amount in tk"/>
+    <Button
+    android:id="@+id/Expense_SaveBT"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Save"/>
+
+
+
+
+    </LinearLayout>
+
+</FrameLayout>

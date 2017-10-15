@@ -6,27 +6,23 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.user.tourassistant.activities.Log;
 import com.example.user.tourassistant.activities.SampleActivityBase;
 import com.example.user.tourassistant.google_place.AllmapActivity;
 import com.example.user.tourassistant.google_place.Example;
-import com.example.user.tourassistant.google_place.MapsActivity;
 import com.example.user.tourassistant.google_place.RetrofitMaps;
-import com.example.user.tourassistant.page_fragment.BlogFragment;
+import com.example.user.tourassistant.page_fragment.AddExpenseFragment;
+import com.example.user.tourassistant.page_fragment.EventFragment;
+import com.example.user.tourassistant.page_fragment.ExpenseListFragment;
 import com.example.user.tourassistant.page_fragment.HomeFragment;
+import com.example.user.tourassistant.page_fragment.MomentFragment;
 import com.example.user.tourassistant.page_fragment.SigninFragment;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -81,10 +77,21 @@ public class HomeActivity extends SampleActivityBase {
                 case R.id.navigation_notifications:
                     FragmentManager fm3 = getSupportFragmentManager();
                     FragmentTransaction ft3 = fm3.beginTransaction();
-                    BlogFragment blogFragment = new BlogFragment();
-                    ft3.replace(R.id.homeFragmentView,blogFragment);
+                    EventFragment eventFragment = new EventFragment();
+                    ft3.replace(R.id.homeFragmentView,eventFragment);
                     ft3.addToBackStack(null);
                     ft3.commit();
+                    return true;
+                case R.id.navigation_tourmate:
+                    FragmentManager fm4 = getSupportFragmentManager();
+                    FragmentTransaction ft4 = fm4.beginTransaction();
+                    MomentFragment momentFragment = new MomentFragment();
+                    ft4.replace(R.id.homeFragmentView,momentFragment);
+                    ft4.addToBackStack(null);
+                    ft4.commit();
+                    return true;
+                case R.id.navigation_account:
+
                     return true;
             }
             return false;
@@ -170,13 +177,19 @@ public class HomeActivity extends SampleActivityBase {
         }
     }
 
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.main_menu, menu);
+//        return true;
+//    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        super.onCreateOptionsMenu(menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -209,7 +222,7 @@ public class HomeActivity extends SampleActivityBase {
             public void onResponse(Call<Example> call, Response<Example> response) {
 
                 String placeName = response.body().getResults().get(0).getName();
-                homeImage=findViewById(R.id.homeImage);
+                homeImage= (ImageView) findViewById(R.id.homeImage);
                 if(response.body().getResults().get(0).getPhotos().get(0).getPhotoReference()!=null) {
                     String photoUrl = String.format("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + response.body().getResults().get(0).getPhotos().get(0).getPhotoReference() + "&key=AIzaSyA1GDN-skUP2mxHOAJiaJiIdpvKMKJuJEA");
                     Glide.with(getApplicationContext()).load(photoUrl).asBitmap()
@@ -228,5 +241,8 @@ public class HomeActivity extends SampleActivityBase {
 
 
     }
+
+
+
 
 }

@@ -1,0 +1,64 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.user.tourassistant.page_fragment.AddEventFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <include layout="@layout/app_bar_layout"></include>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/actionModeCloseDrawable" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </LinearLayout>
+
+
+        <EditText
+            android:id="@+id/destinationEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Destination"/>
+        <EditText
+            android:id="@+id/fromDateEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="From Date"/>
+        <EditText
+            android:id="@+id/toDateET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="To Date"/>
+
+        <EditText
+            android:id="@+id/budgetEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Budget"/>
+        <Button
+            android:id="@+id/saveBt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="save"
+            />
+    </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>
