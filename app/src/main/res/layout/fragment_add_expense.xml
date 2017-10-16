@@ -19,11 +19,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:hint="Expense Amount in tk"/>
-    <Button
-    android:id="@+id/Expense_SaveBT"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Save"/>
+
 
 
 

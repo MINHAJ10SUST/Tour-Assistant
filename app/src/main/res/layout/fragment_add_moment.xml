@@ -45,14 +45,7 @@ tools:context="com.example.user.tourassistant.page_fragment.AddMomentFragment">
             android:textSize="18sp"
             android:padding="10dp"/>
 
-        <Button
-            android:id="@+id/btn_post_moment"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="Post Moment"
-            android:textAllCaps="false" />
+
 
     </LinearLayout>
 

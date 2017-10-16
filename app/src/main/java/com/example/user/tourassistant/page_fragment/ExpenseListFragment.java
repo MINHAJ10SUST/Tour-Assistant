@@ -10,6 +10,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -68,20 +71,7 @@ public class ExpenseListFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        FloatingActionButton fab = (FloatingActionButton)getActivity().findViewById(R.id.fabExpense);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                FragmentManager fm5 = getActivity().getSupportFragmentManager();
-                FragmentTransaction ft5 = fm5.beginTransaction();
-                AddExpenseFragment addExpenseFragment = new AddExpenseFragment();
-                ft5.replace(R.id.homeFragmentView,addExpenseFragment);
-                ft5.addToBackStack(null);
-                ft5.commit();
-
-            }
-        });
     }
 
 
@@ -136,5 +126,32 @@ public class ExpenseListFragment extends Fragment {
 //        }
     }
 
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(
+            Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.event_manu, menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.addEvent:
+                FragmentManager fm5 = getActivity().getSupportFragmentManager();
+                FragmentTransaction ft5 = fm5.beginTransaction();
+                AddExpenseFragment addExpenseFragment = new AddExpenseFragment();
+                ft5.replace(R.id.homeFragmentView,addExpenseFragment);
+                ft5.addToBackStack(null);
+                ft5.commit();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 }

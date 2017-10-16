@@ -3,7 +3,12 @@ package com.example.user.tourassistant.page_fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -39,22 +44,45 @@ public class AddEventFragment extends Fragment {
         toDateET=view.findViewById(R.id.toDateET);
         budgetEt=view.findViewById(R.id.budgetEt);
 
-        eventSavebt=view.findViewById(R.id.saveBt);
-        eventSavebt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
+
+        // Inflate the layout for this fragment
+        return view;
+    }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(
+            Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.save_manu, menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.saveEvent:
                 myEventRef = database.getReference("Events").push();
                 myEventRef.child("Destination").setValue(destinationEt.getText().toString());
                 myEventRef.child("FromDate").setValue(fromDateEt.getText().toString());
                 myEventRef.child("ToDate").setValue(toDateET.getText().toString());
                 myEventRef.child("budget").setValue(budgetEt.getText().toString());
 
-            }
-        });
-
-        // Inflate the layout for this fragment
-        return view;
+                FragmentManager fm3 = getActivity().getSupportFragmentManager();
+                FragmentTransaction ft3 = fm3.beginTransaction();
+                EventFragment eventFragment = new EventFragment();
+                ft3.replace(R.id.homeFragmentView,eventFragment);
+                ft3.addToBackStack(null);
+                ft3.commit();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
+
 
 }

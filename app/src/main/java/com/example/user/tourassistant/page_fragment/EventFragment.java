@@ -1,17 +1,22 @@
 package com.example.user.tourassistant.page_fragment;
 
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -67,20 +72,7 @@ public class EventFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        FloatingActionButton fab = (FloatingActionButton)getActivity().findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                FragmentManager fm3 = getActivity().getSupportFragmentManager();
-                FragmentTransaction ft3 = fm3.beginTransaction();
-                AddEventFragment addEventFragment = new AddEventFragment();
-                ft3.replace(R.id.homeFragmentView,addEventFragment);
-                ft3.addToBackStack(null);
-                ft3.commit();
-
-            }
-        });
     }
 
     @Override
@@ -156,4 +148,23 @@ public class EventFragment extends Fragment {
             Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.event_manu, menu);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.addEvent:
+                FragmentManager fm3 = getActivity().getSupportFragmentManager();
+                FragmentTransaction ft3 = fm3.beginTransaction();
+                AddEventFragment addEventFragment = new AddEventFragment();
+                ft3.replace(R.id.homeFragmentView,addEventFragment);
+                ft3.addToBackStack(null);
+                ft3.commit();
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
 }

@@ -13,6 +13,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -25,6 +28,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.user.tourassistant.R;
 import com.example.user.tourassistant.firebase.Moment;
+import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -92,20 +96,7 @@ public class MomentFragment extends Fragment {
         momentListView.setHasFixedSize(true);
         momentListView.setLayoutManager(llm);
 
-        FloatingActionButton fab = (FloatingActionButton)getActivity().findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                FragmentManager fm3 = getActivity().getSupportFragmentManager();
-                FragmentTransaction ft3 = fm3.beginTransaction();
-                AddMomentFragment addMomentFragment = new AddMomentFragment();
-                ft3.replace(R.id.homeFragmentView,addMomentFragment);
-                ft3.addToBackStack(null);
-                ft3.commit();
-
-            }
-        });
 
     }
 
@@ -194,6 +185,31 @@ public class MomentFragment extends Fragment {
     }
 
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
+    @Override
+    public void onCreateOptionsMenu(
+            Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.event_manu, menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.addEvent:
+                FragmentManager fm3 = getActivity().getSupportFragmentManager();
+                FragmentTransaction ft3 = fm3.beginTransaction();
+                AddMomentFragment addMomentFragment = new AddMomentFragment();
+                ft3.replace(R.id.homeFragmentView,addMomentFragment);
+                ft3.addToBackStack(null);
+                ft3.commit();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 }

@@ -1,17 +1,24 @@
 package com.example.user.tourassistant.page_fragment;
 
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -29,6 +36,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -70,9 +80,11 @@ public class AddMomentFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mAuth = FirebaseAuth.getInstance();
+//        mAuth = FirebaseAuth.getInstance();
+//
+//        mCurrentUser = mAuth.getCurrentUser();
+//        Toast.makeText(getActivity(),mCurrentUser.getEmail(),Toast.LENGTH_LONG).show();
 
-        mCurrentUser = mAuth.getCurrentUser();
         mStorageRef = FirebaseStorage.getInstance().getReference();
         momentDatabase = FirebaseDatabase.getInstance().getReference().child("moments");
         //mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("users").child(mCurrentUser.getUid());
@@ -80,29 +92,12 @@ public class AddMomentFragment extends Fragment {
         addImage = (ImageButton) getActivity().findViewById(R.id.add_image);
         addTitleET = (EditText) getActivity().findViewById(R.id.et_add_title);
         addDescriptionET = (EditText) getActivity().findViewById(R.id.et_add_description);
-        postMomentBTN = (Button) getActivity().findViewById(R.id.btn_post_moment);
+
         progressDialog = new ProgressDialog(getActivity());
 
 
 
-        postMomentBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startPosting();
-            }
-        });
 
-
-        addImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                galleryIntent.setType("image/*");
-                startActivityForResult(galleryIntent, GALLERY_REQUEST);
-
-
-            }
-        });
 
 
     }
@@ -132,8 +127,10 @@ public class AddMomentFragment extends Fragment {
         final String description = addDescriptionET.getText().toString().trim();
         if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(description) && imageUri != null){
             progressDialog.show();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+            String currentDateandTime = sdf.format(new Date());
 
-            StorageReference filepath = mStorageRef.child("Moment Image").child(imageUri.getLastPathSegment());
+            StorageReference filepath = mStorageRef.child("Moment_Image").child(currentDateandTime);
             filepath.putFile(imageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -144,7 +141,6 @@ public class AddMomentFragment extends Fragment {
                             newPost.child("title").setValue(title);
                             newPost.child("desc").setValue(description);
                             newPost.child("image").setValue(downloadUrl.toString());
-                            newPost.child("userId").setValue("minhaj");
 
                             FragmentManager fm3 = getActivity().getSupportFragmentManager();
                             FragmentTransaction ft3 = fm3.beginTransaction();
@@ -172,6 +168,43 @@ public class AddMomentFragment extends Fragment {
         }
 
     }
+
+
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(
+            Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.save_manu, menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.saveEvent:
+                startPosting();
+
+                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (ContextCompat.checkSelfPermission(getActivity(),
+                            Manifest.permission.READ_EXTERNAL_STORAGE)
+                            == PackageManager.PERMISSION_GRANTED) {
+
+                    }
+                } else {
+                    Toast.makeText(getActivity(),"storage permission",Toast.LENGTH_LONG).show();
+
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 
 
 
