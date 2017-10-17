@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.user.tourassistant.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -27,6 +29,9 @@ public class AddEventFragment extends Fragment {
     private View view;
     FirebaseDatabase database;
     DatabaseReference myEventRef;
+    private FirebaseAuth mAuth;
+    private FirebaseUser mCurrentUser;
+
 
     public AddEventFragment() {
         // Required empty public constructor
@@ -36,6 +41,10 @@ public class AddEventFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        mAuth = FirebaseAuth.getInstance();
+
+        //mCurrentUser = mAuth.getCurrentUser().getUid();
+
 
         database = FirebaseDatabase.getInstance();
         view=inflater.inflate(R.layout.fragment_add_event, container, false);
@@ -66,7 +75,7 @@ public class AddEventFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.saveEvent:
-                myEventRef = database.getReference("Events").push();
+                myEventRef = database.getReference("Events").child(mAuth.getCurrentUser().getUid()).push();
                 myEventRef.child("Destination").setValue(destinationEt.getText().toString());
                 myEventRef.child("FromDate").setValue(fromDateEt.getText().toString());
                 myEventRef.child("ToDate").setValue(toDateET.getText().toString());

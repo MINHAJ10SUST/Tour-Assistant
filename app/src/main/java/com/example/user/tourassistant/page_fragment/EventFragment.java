@@ -21,11 +21,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.example.user.tourassistant.R;
 import com.example.user.tourassistant.firebase.Events;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -42,6 +45,10 @@ public class EventFragment extends Fragment {
     private DatabaseReference eventDatabase,userDatabase;
     FirebaseDatabase database;
     DatabaseReference myEventRef;
+    private FirebaseAuth mAuth;
+    private FirebaseUser mCurrentUser;
+    //String keyid;
+
     public EventFragment(){
 
     }
@@ -51,11 +58,12 @@ public class EventFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         database = FirebaseDatabase.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
 
         view=inflater.inflate(R.layout.fragment_event, container, false);
 
-        eventDatabase = FirebaseDatabase.getInstance().getReference().child("Events");
+        eventDatabase = FirebaseDatabase.getInstance().getReference().child("Events").child(mAuth.getCurrentUser().getUid());
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         llm.setReverseLayout(true);
         llm.setStackFromEnd(true);
@@ -83,18 +91,40 @@ public class EventFragment extends Fragment {
         ) {
             @Override
             protected void populateViewHolder(EventViewHolder viewHolder, Events model, int position) {
+               final String keyid=getRef(position).getKey();
 
                 viewHolder.setEventName(model.getDestination());
                 viewHolder.setFromDate(model.getFromDate());
                 viewHolder.setToDate(model.getToDate());
                 viewHolder.setBudget(model.getBudget());
-                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                viewHolder.expenseShowBt.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         FragmentManager fm4 = getActivity().getSupportFragmentManager();
                         FragmentTransaction ft4 = fm4.beginTransaction();
                         ExpenseListFragment expenseFragment = new ExpenseListFragment();
+
+                        Bundle sendKey = new Bundle();
+                        sendKey.putString("eventkey", keyid);
+                        expenseFragment.setArguments(sendKey);
+
                         ft4.replace(R.id.homeFragmentView,expenseFragment);
+                        ft4.addToBackStack(null);
+                        ft4.commit();
+                    }
+                });
+                viewHolder.momentShowBt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        FragmentManager fm4 = getActivity().getSupportFragmentManager();
+                        FragmentTransaction ft4 = fm4.beginTransaction();
+                        MomentFragment momentFragment = new MomentFragment();
+
+                        Bundle sendKey = new Bundle();
+                        sendKey.putString("eventkey", keyid);
+                        momentFragment.setArguments(sendKey);
+
+                        ft4.replace(R.id.homeFragmentView,momentFragment);
                         ft4.addToBackStack(null);
                         ft4.commit();
                     }
@@ -110,30 +140,34 @@ public class EventFragment extends Fragment {
     public static class EventViewHolder extends RecyclerView.ViewHolder{
 
         View mView;
+        ImageButton expenseShowBt;
+        ImageButton momentShowBt;
         public EventViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
+            expenseShowBt=mView.findViewById(R.id.ExpenseShowBt);
+            momentShowBt=mView.findViewById(R.id.MomentShowBt);
         }
 
         public void setEventName(String value){
             TextView eventName=mView.findViewById(R.id.eventNameRow);
-            eventName.setText(value);
+            eventName.setText("Tour to "+value);
 
         }
 
         public void setFromDate(String value){
             TextView fromDate=mView.findViewById(R.id.fromDateRow);
-            fromDate.setText(value);
+            fromDate.setText("Start date :"+value);
         }
 
         public void setToDate(String value){
             TextView toDate=mView.findViewById(R.id.toDateRow);
-            toDate.setText(value);
+            toDate.setText("End date :"+value);
         }
 
         public void setBudget(String value){
             TextView budget=mView.findViewById(R.id.budgetRow);
-            budget.setText(value);
+            budget.setText("Aprox buget"+value);
         }
     }
 

@@ -55,6 +55,7 @@ public class MomentFragment extends Fragment {
     private ProgressDialog progressDialog;
     private FirebaseAuth mAuth;
     private FirebaseRecyclerAdapter<Moment,MomentViewHolder> firebaseRecyclerAdapter;
+    String eventkey;
 
 
 
@@ -81,11 +82,11 @@ public class MomentFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        eventkey = getArguments().getString("eventkey");
         mAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(getContext());
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("moments");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("moments").child(eventkey);
         userDatabase = FirebaseDatabase.getInstance().getReference().child("users");
 
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
@@ -203,6 +204,9 @@ public class MomentFragment extends Fragment {
                 FragmentManager fm3 = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft3 = fm3.beginTransaction();
                 AddMomentFragment addMomentFragment = new AddMomentFragment();
+                Bundle sendKey = new Bundle();
+                sendKey.putString("eventkey", eventkey);
+                addMomentFragment.setArguments(sendKey);
                 ft3.replace(R.id.homeFragmentView,addMomentFragment);
                 ft3.addToBackStack(null);
                 ft3.commit();

@@ -37,6 +37,7 @@ public class AddExpenseFragment extends Fragment {
     private Button expense_SaveBT;
     FirebaseDatabase database;
     DatabaseReference myExpenseRef;
+    String eventkey;
     public AddExpenseFragment() {
         // Required empty public constructor
     }
@@ -46,6 +47,8 @@ public class AddExpenseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
                 database = FirebaseDatabase.getInstance();
+        eventkey = getArguments().getString("eventkey");
+        database = FirebaseDatabase.getInstance();
         view=inflater.inflate(R.layout.fragment_add_expense, container, false);
         expense_DetailsET=view.findViewById(R.id.Expense_DetailsET);
         expense_AmountET=view.findViewById(R.id.Expense_AmountET);
@@ -72,7 +75,7 @@ public class AddExpenseFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.saveEvent:
                 String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-                myExpenseRef = database.getReference("TExpense").push();
+                myExpenseRef = database.getReference("TExpense").child(eventkey).push();
                 myExpenseRef.child("EDetails").setValue(expense_DetailsET.getText().toString());
                 myExpenseRef.child("Expense").setValue(expense_AmountET.getText().toString());
                 myExpenseRef.child("Date").setValue(date);
@@ -80,6 +83,10 @@ public class AddExpenseFragment extends Fragment {
                 FragmentManager fm4 = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft4 = fm4.beginTransaction();
                 ExpenseListFragment expenseFragment = new ExpenseListFragment();
+                Bundle sendKey = new Bundle();
+                sendKey.putString("eventkey", eventkey);
+                expenseFragment.setArguments(sendKey);
+
                 ft4.replace(R.id.homeFragmentView,expenseFragment);
                 ft4.addToBackStack(null);
                 ft4.commit();

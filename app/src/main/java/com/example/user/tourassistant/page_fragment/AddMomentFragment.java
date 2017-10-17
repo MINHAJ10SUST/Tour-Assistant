@@ -60,7 +60,7 @@ public class AddMomentFragment extends Fragment {
     private FirebaseUser mCurrentUser;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private DatabaseReference momentDatabase, mDatabaseUser;
-
+    String eventkey;
     public AddMomentFragment() {
         // Required empty public constructor
     }
@@ -79,14 +79,14 @@ public class AddMomentFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        eventkey = getArguments().getString("eventkey");
 //        mAuth = FirebaseAuth.getInstance();
 //
 //        mCurrentUser = mAuth.getCurrentUser();
 //        Toast.makeText(getActivity(),mCurrentUser.getEmail(),Toast.LENGTH_LONG).show();
 
         mStorageRef = FirebaseStorage.getInstance().getReference();
-        momentDatabase = FirebaseDatabase.getInstance().getReference().child("moments");
+        momentDatabase = FirebaseDatabase.getInstance().getReference().child("moments").child(eventkey);
         //mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("users").child(mCurrentUser.getUid());
 
         addImage = (ImageButton) getActivity().findViewById(R.id.add_image);
@@ -94,6 +94,19 @@ public class AddMomentFragment extends Fragment {
         addDescriptionET = (EditText) getActivity().findViewById(R.id.et_add_description);
 
         progressDialog = new ProgressDialog(getActivity());
+        addImage.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                               Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                               galleryIntent.setType("image/*");
+                               startActivityForResult(galleryIntent, GALLERY_REQUEST);
+
+
+                          }
+         });
+
+
+
 
 
 
@@ -145,6 +158,9 @@ public class AddMomentFragment extends Fragment {
                             FragmentManager fm3 = getActivity().getSupportFragmentManager();
                             FragmentTransaction ft3 = fm3.beginTransaction();
                             MomentFragment momentFragment = new MomentFragment();
+                            Bundle sendKey = new Bundle();
+                            sendKey.putString("eventkey", eventkey);
+                            momentFragment.setArguments(sendKey);
                             ft3.replace(R.id.homeFragmentView,momentFragment);
                             ft3.addToBackStack(null);
                             ft3.commit();

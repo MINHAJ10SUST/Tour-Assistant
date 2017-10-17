@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.user.tourassistant.R;
 import com.example.user.tourassistant.firebase.Events;
@@ -37,6 +38,8 @@ public class ExpenseListFragment extends Fragment {
     private DatabaseReference eventDatabase,userDatabase;
     FirebaseDatabase database;
     DatabaseReference myEventRef;
+    String eventkey;
+    String keyid;
     public ExpenseListFragment() {
         // Required empty public constructor
     }
@@ -46,14 +49,14 @@ public class ExpenseListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-
+        eventkey = getArguments().getString("eventkey");
+        //Toast.makeText(getActivity(),eventkey,Toast.LENGTH_LONG).show();
         database = FirebaseDatabase.getInstance();
 
 
         view=inflater.inflate(R.layout.fragment_expense_list, container, false);
 
-        eventDatabase = FirebaseDatabase.getInstance().getReference().child("TExpense");
+        eventDatabase = FirebaseDatabase.getInstance().getReference().child("TExpense").child(eventkey);
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         llm.setReverseLayout(true);
         llm.setStackFromEnd(true);
@@ -145,6 +148,9 @@ public class ExpenseListFragment extends Fragment {
                 FragmentManager fm5 = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft5 = fm5.beginTransaction();
                 AddExpenseFragment addExpenseFragment = new AddExpenseFragment();
+                Bundle sendKey = new Bundle();
+                sendKey.putString("eventkey", eventkey);
+                addExpenseFragment.setArguments(sendKey);
                 ft5.replace(R.id.homeFragmentView,addExpenseFragment);
                 ft5.addToBackStack(null);
                 ft5.commit();

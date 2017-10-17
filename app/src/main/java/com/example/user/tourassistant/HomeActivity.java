@@ -83,12 +83,7 @@ public class HomeActivity extends SampleActivityBase {
                     ft3.commit();
                     return true;
                 case R.id.navigation_tourmate:
-                    FragmentManager fm4 = getSupportFragmentManager();
-                    FragmentTransaction ft4 = fm4.beginTransaction();
-                    MomentFragment momentFragment = new MomentFragment();
-                    ft4.replace(R.id.homeFragmentView,momentFragment);
-                    ft4.addToBackStack(null);
-                    ft4.commit();
+
                     return true;
                 case R.id.navigation_account:
 
