@@ -63,7 +63,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:background="@drawable/hotel"
-                            android:onClick="showHotel"/>
+                            android:onClick="showMapCtg"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -85,7 +85,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:background="@drawable/restaurant" />
+                            android:background="@drawable/restaurant"
+                            android:onClick="showMapCtg"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -107,7 +108,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:background="@drawable/cafe" />
+                            android:background="@drawable/cafe"
+                            android:onClick="showMapCtg"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -139,7 +141,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:background="@drawable/grocery" />
+                            android:background="@drawable/grocery"
+                            android:onClick="showMapCtg"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -161,7 +164,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:background="@drawable/atm" />
+                            android:background="@drawable/atm"
+                            android:onClick="showMapCtg"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -182,7 +186,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:background="@drawable/bank" />
+                            android:background="@drawable/bank"
+                            android:onClick="showMapCtg"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -212,6 +217,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/pharmacy"
+                    android:onClick="showMapCtg"
                 android:layout_centerHorizontal="true"/>
                 <TextView
                 android:layout_width="wrap_content"

@@ -143,8 +143,7 @@ public class SigninFragment extends Fragment {
         fte.addToBackStack(null);
         fte.commit();
 
-        //Toast.makeText(getActivity(),sharedPref.getString("user","useer"),Toast.LENGTH_LONG).show();
-    }
+          }
 
     private void onSignedOutCleanup() {
         mUsername = ANONYMOUS;
@@ -153,7 +152,6 @@ public class SigninFragment extends Fragment {
         editor.putString("user",null);
         editor.commit();
         editor.apply();
-       // Toast.makeText(getActivity(),sharedPref.getString("user","useer"),Toast.LENGTH_LONG).show();
 
 
 

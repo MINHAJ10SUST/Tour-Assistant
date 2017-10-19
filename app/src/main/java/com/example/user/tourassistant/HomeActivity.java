@@ -148,11 +148,36 @@ public class HomeActivity extends SampleActivityBase {
 
     }
 
-    public void showHotel(View view) {
+    public void showMapCtg(View view) {
         Intent intentMap=new Intent(HomeActivity.this,AllmapActivity.class);
         intentMap.putExtra("latitude", latitude);
         intentMap.putExtra("longitude",longitude);
-        intentMap.putExtra("type",type);
+        switch (view.getId()){
+            case R.id.Hotel:
+                intentMap.putExtra("type","hotels");
+                break;
+            case R.id.Cafe:
+                intentMap.putExtra("type","cafe");
+                break;
+            case R.id.Restaurant:
+                intentMap.putExtra("type","restaurant");
+                break;
+            case R.id.Grocery:
+                intentMap.putExtra("type","grocery_or_supermarket");
+                break;
+            case R.id.Atm:
+                intentMap.putExtra("type","atm");
+                break;
+            case R.id.Bank:
+                intentMap.putExtra("type","bank");
+                break;
+            case R.id.Pharmacy:
+                intentMap.putExtra("type","pharmacy");
+                break;
+
+
+        }
+
         startActivity(intentMap);
 
 //        FragmentManager fm = getSupportFragmentManager();
