@@ -1,18 +1,15 @@
-package com.example.user.tourassistant;
+package com.example.user.tourassistant.page_fragment;
 
-import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.user.tourassistant.google_place.MapsActivity;
-import com.example.user.tourassistant.page_fragment.HomeFragment;
+import com.example.user.tourassistant.R;
 import com.example.user.tourassistant.weather.ApiTool;
 import com.example.user.tourassistant.weather.Example;
 
@@ -25,51 +22,26 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class TestWeather extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class WeatherFragment extends Fragment {
 
     double latitude,longitude;
-
-
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    FragmentManager fm1 = getSupportFragmentManager();
-                    FragmentTransaction ft1 = fm1.beginTransaction();
-                    HomeFragment homeFragment = new HomeFragment();
-                    ft1.replace(R.id.homeFragmentView,homeFragment);
-                    ft1.addToBackStack(null);
-                    ft1.commit();
-                    return true;
-                case R.id.navigation_dashboard:
-
-                    return true;
-                case R.id.navigation_notifications:
-                    Intent intent=new Intent(getApplication(),MapsActivity.class);
-                    startActivity(intent);
-                    return true;
-            }
-            return false;
-        }
-
-    };
+    public WeatherFragment() {
+        // Required empty public constructor
+    }
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test_weather);
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         latitude=23.777176;
         longitude=90.399452;
 
         showWeather(latitude,longitude);
+        return inflater.inflate(R.layout.fragment_weather, container, false);
     }
-
 
 
     public void showWeather(double lat,double lon){
@@ -128,18 +100,18 @@ public class TestWeather extends AppCompatActivity {
 
 
 
-                TextView time0 = (TextView) findViewById(R.id.time0);
-                TextView time1 = (TextView) findViewById(R.id.time1);
-                TextView time2 = (TextView) findViewById(R.id.time2);
-                TextView time3 = (TextView) findViewById(R.id.time3);
-                TextView time4 = (TextView) findViewById(R.id.time4);
-                TextView time5 = (TextView) findViewById(R.id.time5);
-                TextView time6 = (TextView) findViewById(R.id.time6);
-                TextView time7 = (TextView) findViewById(R.id.time7);
-                TextView time8 = (TextView) findViewById(R.id.time8);
-                TextView time9 = (TextView) findViewById(R.id.time9);
-                TextView time10 = (TextView) findViewById(R.id.time10);
-                TextView time11 = (TextView) findViewById(R.id.time11);
+                TextView time0 = getActivity(). findViewById(R.id.time0);
+                TextView time1 = getActivity(). findViewById(R.id.time1);
+                TextView time2 = getActivity(). findViewById(R.id.time2);
+                TextView time3 = getActivity(). findViewById(R.id.time3);
+                TextView time4 =getActivity(). findViewById(R.id.time4);
+                TextView time5 = getActivity(). findViewById(R.id.time5);
+                TextView time6 = getActivity(). findViewById(R.id.time6);
+                TextView time7 = getActivity(). findViewById(R.id.time7);
+                TextView time8 = getActivity(). findViewById(R.id.time8);
+                TextView time9 = getActivity(). findViewById(R.id.time9);
+                TextView time10 = getActivity(). findViewById(R.id.time10);
+                TextView time11 = getActivity(). findViewById(R.id.time11);
 
                 time0.setText(hour0);
                 time1.setText(hour1);
@@ -154,18 +126,18 @@ public class TestWeather extends AppCompatActivity {
                 time10.setText(hour10);
                 time11.setText(hour11);
 
-                TextView cond0 = (TextView) findViewById(R.id.condition0);
-                TextView cond1 = (TextView) findViewById(R.id.condition1);
-                TextView cond2 = (TextView) findViewById(R.id.condition2);
-                TextView cond3 = (TextView) findViewById(R.id.condition3);
-                TextView cond4 = (TextView) findViewById(R.id.condition4);
-                TextView cond5 = (TextView) findViewById(R.id.condition5);
-                TextView cond6 = (TextView) findViewById(R.id.condition6);
-                TextView cond7 = (TextView) findViewById(R.id.condition7);
-                TextView cond8 = (TextView) findViewById(R.id.condition8);
-                TextView cond9 = (TextView) findViewById(R.id.condition9);
-                TextView cond10 = (TextView) findViewById(R.id.condition10);
-                TextView cond11 = (TextView) findViewById(R.id.condition11);
+                TextView cond0 = getActivity(). findViewById(R.id.condition0);
+                TextView cond1 = getActivity(). findViewById(R.id.condition1);
+                TextView cond2 = getActivity(). findViewById(R.id.condition2);
+                TextView cond3 = getActivity(). findViewById(R.id.condition3);
+                TextView cond4 = getActivity(). findViewById(R.id.condition4);
+                TextView cond5 = getActivity(). findViewById(R.id.condition5);
+                TextView cond6 = getActivity(). findViewById(R.id.condition6);
+                TextView cond7 = getActivity(). findViewById(R.id.condition7);
+                TextView cond8 = getActivity(). findViewById(R.id.condition8);
+                TextView cond9 = getActivity(). findViewById(R.id.condition9);
+                TextView cond10 = getActivity(). findViewById(R.id.condition10);
+                TextView cond11 = getActivity(). findViewById(R.id.condition11);
 
                 cond0.setText(hourCondText0);
                 cond1.setText(hourCondText1);
@@ -188,7 +160,7 @@ public class TestWeather extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Example> call, Throwable t) {
-                Toast.makeText(getApplication(),"Please connect to internet",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"Please connect to internet",Toast.LENGTH_LONG).show();
 
 
             }
@@ -197,6 +169,5 @@ public class TestWeather extends AppCompatActivity {
 
 
     }
-
 
 }

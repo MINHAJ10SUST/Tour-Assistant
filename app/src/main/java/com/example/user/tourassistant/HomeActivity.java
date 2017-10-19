@@ -1,6 +1,8 @@
 package com.example.user.tourassistant;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -12,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.user.tourassistant.activities.SampleActivityBase;
@@ -22,8 +25,10 @@ import com.example.user.tourassistant.page_fragment.AddExpenseFragment;
 import com.example.user.tourassistant.page_fragment.EventFragment;
 import com.example.user.tourassistant.page_fragment.ExpenseListFragment;
 import com.example.user.tourassistant.page_fragment.HomeFragment;
+import com.example.user.tourassistant.page_fragment.MapFragment;
 import com.example.user.tourassistant.page_fragment.MomentFragment;
 import com.example.user.tourassistant.page_fragment.SigninFragment;
+import com.example.user.tourassistant.page_fragment.WeatherFragment;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -32,6 +37,8 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,6 +57,10 @@ public class HomeActivity extends SampleActivityBase {
 
     public int sbFlag=0;
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
+    private boolean signoutflag;
+    private FirebaseAuth mFirebaseAuth;
+    private SharedPreferences sharedPref;
+
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -67,20 +78,10 @@ public class HomeActivity extends SampleActivityBase {
                     ft.commit();
                     return true;
                 case R.id.navigation_dashboard:
-                    FragmentManager fm2 = getSupportFragmentManager();
-                    FragmentTransaction ft2 = fm2.beginTransaction();
-                    SigninFragment signinFragment = new SigninFragment();
-                    ft2.replace(R.id.homeFragmentView,signinFragment);
-                    ft2.addToBackStack(null);
-                    ft2.commit();
+                    goMyTrip();
                     return true;
                 case R.id.navigation_notifications:
-                    FragmentManager fm3 = getSupportFragmentManager();
-                    FragmentTransaction ft3 = fm3.beginTransaction();
-                    EventFragment eventFragment = new EventFragment();
-                    ft3.replace(R.id.homeFragmentView,eventFragment);
-                    ft3.addToBackStack(null);
-                    ft3.commit();
+
                     return true;
                 case R.id.navigation_tourmate:
 
@@ -93,6 +94,37 @@ public class HomeActivity extends SampleActivityBase {
         }
 
     };
+
+
+    public void goMyTrip(){
+
+        sharedPref = getPreferences(Context.MODE_PRIVATE);
+
+        Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
+        String userfl=sharedPref.getString("user",null);
+
+        if(userfl==null){
+
+            FragmentManager fme = getSupportFragmentManager();
+            FragmentTransaction fte = fme.beginTransaction();
+            SigninFragment signinFragment = new SigninFragment();
+            fte.replace(R.id.homeFragmentView,signinFragment);
+            fte.addToBackStack(null);
+            fte.commit();
+
+            }
+        if(userfl!=null){
+
+            FragmentManager fme = getSupportFragmentManager();
+            FragmentTransaction fte = fme.beginTransaction();
+            EventFragment eventFragment = new EventFragment();
+            fte.replace(R.id.homeFragmentView,eventFragment);
+            fte.addToBackStack(null);
+            fte.commit();
+
+
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,10 +154,29 @@ public class HomeActivity extends SampleActivityBase {
         intentMap.putExtra("longitude",longitude);
         intentMap.putExtra("type",type);
         startActivity(intentMap);
+
+//        FragmentManager fm = getSupportFragmentManager();
+//        FragmentTransaction ft = fm.beginTransaction();
+//        MapFragment mapFragment = new MapFragment();
+//
+//        Bundle sendKey = new Bundle();
+//        sendKey.putFloat("latitude", (float) latitude);
+//        sendKey.putFloat("longitude",(float) longitude);
+//        sendKey.putString("type",type);
+//        mapFragment.setArguments(sendKey);
+//        ft.replace(R.id.homeFragmentView,mapFragment);
+//        ft.addToBackStack(null);
+//        ft.commit();
     }
 
-    public void showWeather(View view) throws GooglePlayServicesNotAvailableException, GooglePlayServicesRepairableException {
-        openAutocompleteActivity();
+    public void showWeather(View view)  {
+        FragmentManager fmw = getSupportFragmentManager();
+        FragmentTransaction ftw = fmw.beginTransaction();
+        WeatherFragment weatherFragment = new WeatherFragment();
+        ftw.replace(R.id.homeFragmentView,weatherFragment);
+        ftw.addToBackStack(null);
+        ftw.commit();
+
     }
 
     private void openAutocompleteActivity() {
@@ -172,12 +223,6 @@ public class HomeActivity extends SampleActivityBase {
         }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.main_menu, menu);
-//        return true;
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -190,6 +235,19 @@ public class HomeActivity extends SampleActivityBase {
         switch (item.getItemId()) {
             case R.id.sign_out_menu:
                 AuthUI.getInstance().signOut(this);
+                sharedPref = getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("user",null);
+                editor.commit();
+                editor.apply();
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                HomeFragment homeFragment = new HomeFragment();
+                ft.replace(R.id.homeFragmentView,homeFragment);
+                ft.addToBackStack(null);
+                ft.commit();
+
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

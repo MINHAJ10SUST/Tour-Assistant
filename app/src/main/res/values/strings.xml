@@ -10,6 +10,7 @@
     <string name="title_toutmate">Tour Mate</string>
     <string name="splat">lat</string>
     <string name="splan">lon</string>
+    <string name="userName">userName</string>
 
 
     <string name="title_activity_maps">Map</string>

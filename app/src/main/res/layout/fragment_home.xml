@@ -3,121 +3,267 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/authui_colorPrimaryDark"
     tools:context="com.example.user.tourassistant.page_fragment.HomeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/authui_colorActivated">
+        android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp">
-        <ImageView
-            android:id="@+id/homeImage"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/coxbazer"/>
-        <Button
-            android:id="@+id/HomepageCityBt"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:text="Nearby"
-            android:layout_centerHorizontal="true"
-            android:layout_alignBottom="@id/homeImage"
-            android:onClick="getPlace"
-            />
-    </RelativeLayout>
+            android:layout_height="200dp">
+
+            <ImageView
+                android:id="@+id/homeImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/coxbazer" />
+
+            <Button
+                android:id="@+id/HomepageCityBt"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_alignBottom="@id/homeImage"
+                android:layout_centerHorizontal="true"
+                android:onClick="getPlace"
+                android:text="Nearby" />
+        </RelativeLayout>
 
 
-
-    <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/card_view"
-        android:padding="50dp"
-        android:layout_margin="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        card_view:cardCornerRadius="4dp">
-        <LinearLayout
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:background="@color/cardview_dark_background">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/cardview_dark_background"
+                android:orientation="vertical">
 
-                <ImageButton
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/hotel"
-                    android:onClick="showHotel"/>
+                    android:layout_marginBottom="1dp"
+                    android:background="@color/cardview_dark_background"
+                    android:orientation="horizontal">
 
-                <ImageButton
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/cafe" />
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="1dp"
+                        android:layout_weight="1"
+                        android:background="#ffffff"
+                       >
 
-                <ImageButton
-                    android:layout_width="0dp"
+                        <ImageButton
+                            android:id="@+id/Hotel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:background="@drawable/hotel"
+                            android:onClick="showHotel"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignEnd="@id/Hotel"
+                            android:layout_below="@id/Hotel"
+                            android:text="Hotel" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="1dp"
+                        android:layout_weight="1"
+                        android:background="#ffffff">
+
+                        <ImageButton
+                            android:id="@+id/Restaurant"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:background="@drawable/restaurant" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignEnd="@id/Restaurant"
+                            android:layout_below="@id/Restaurant"
+                            android:text="Restaurant"
+                            android:layout_centerHorizontal="true"/>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#ffffff">
+
+                        <ImageButton
+                            android:id="@+id/Cafe"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:background="@drawable/cafe" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignEnd="@id/Cafe"
+                            android:layout_below="@id/Cafe"
+                            android:text="Cafe" />
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/atm" />
-            </LinearLayout>
-            <LinearLayout
+                    android:layout_marginBottom="1dp"
+                    android:background="@color/cardview_dark_background"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="1dp"
+                        android:layout_weight="1"
+                        android:background="#ffffff">
+
+                        <ImageButton
+                            android:id="@+id/Grocery"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:background="@drawable/grocery" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignEnd="@id/Grocery"
+                            android:layout_below="@id/Grocery"
+                            android:text="Grocery" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="1dp"
+                        android:layout_weight="1"
+                        android:background="#ffffff">
+
+                        <ImageButton
+                            android:id="@+id/Atm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:background="@drawable/atm" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignEnd="@id/Atm"
+                            android:layout_below="@id/Atm"
+                            android:text="Atm" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#ffffff">
+
+                        <ImageButton
+                            android:id="@+id/Bank"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:background="@drawable/bank" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignEnd="@id/Bank"
+                            android:layout_below="@id/Bank"
+                            android:text="Bank" />
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+                <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                    android:layout_marginBottom="1dp"
+                android:background="@color/cardview_dark_background"
+                >
+                <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#ffffff"
+                android:layout_marginRight="1dp">
                 <ImageButton
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/weather"
+                android:id="@+id/Pharmacy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/pharmacy"
+                android:layout_centerHorizontal="true"/>
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pharmacy"
+                android:layout_below="@id/Pharmacy"
+                android:layout_alignEnd="@id/Pharmacy"/>
+                </RelativeLayout>
+                <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#ffffff"
+                android:layout_marginRight="1dp"
+                   >
+                <ImageButton
+                android:id="@+id/Weather"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/weather"
+                android:layout_centerHorizontal="true"
                     android:onClick="showWeather"/>
-
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Weather"
+                android:layout_below="@id/Weather"
+                android:layout_alignEnd="@id/Weather"/>
+                </RelativeLayout>
+                <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#ffffff">
                 <ImageButton
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/cafe" />
+                android:id="@+id/Uber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/uber2"
+                android:layout_centerHorizontal="true"/>
+                <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Uber"
+                android:layout_below="@id/Uber"
+                android:layout_alignEnd="@id/Uber"/>
+                </RelativeLayout>
 
-                <ImageButton
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/atm" />
+
+                </LinearLayout>
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageButton
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/hotel" />
-
-                <ImageButton
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/cafe" />
-
-                <ImageButton
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/atm" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </android.support.v7.widget.CardView>
+        </android.support.v7.widget.CardView>
 
     </LinearLayout>
 

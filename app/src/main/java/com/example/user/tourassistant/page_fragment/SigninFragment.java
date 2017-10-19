@@ -2,11 +2,14 @@ package com.example.user.tourassistant.page_fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,11 +30,9 @@ public class SigninFragment extends Fragment {
     public static final int RC_SIGN_IN = 1;
     private ProgressBar mProgressBar;
     private String mUsername;
-
-    // Firebase instance variables
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
-
+    private SharedPreferences sharedPref;
 
 
     @Override
@@ -61,7 +62,7 @@ public class SigninFragment extends Fragment {
 
 
 
-        final View v = inflater.inflate(R.layout.fragment_signin, container, false);
+        final View v = inflater.inflate(R.layout.fragment_event, container, false);
 
 
         return v;
@@ -113,7 +114,10 @@ public class SigninFragment extends Fragment {
 
         if (mAuthStateListener != null) {
             mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
+
         }
+
+
 
     }
 
@@ -127,11 +131,30 @@ public class SigninFragment extends Fragment {
 
     private void onSignedInInitialize(String username) {
         mUsername = username;
+        sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("user",mUsername);
+        editor.commit();
+        editor.apply();
+        FragmentManager fme = getActivity().getSupportFragmentManager();
+        FragmentTransaction fte = fme.beginTransaction();
+        EventFragment eventFragment = new EventFragment();
+        fte.replace(R.id.homeFragmentView,eventFragment);
+        fte.addToBackStack(null);
+        fte.commit();
 
+        //Toast.makeText(getActivity(),sharedPref.getString("user","useer"),Toast.LENGTH_LONG).show();
     }
 
     private void onSignedOutCleanup() {
         mUsername = ANONYMOUS;
+        sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("user",null);
+        editor.commit();
+        editor.apply();
+       // Toast.makeText(getActivity(),sharedPref.getString("user","useer"),Toast.LENGTH_LONG).show();
+
 
 
     }
