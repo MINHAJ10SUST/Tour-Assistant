@@ -3,6 +3,7 @@ package com.example.user.tourassistant.page_fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -50,12 +51,13 @@ public class MomentFragment extends Fragment {
 
     private RecyclerView momentListView;
     private Toolbar toolbar;
-    private DatabaseReference mDatabase,userDatabase;
+    private DatabaseReference mDatabase,SDatabase,userDatabase;
     private ProgressBar progressBar;
     private ProgressDialog progressDialog;
     private FirebaseAuth mAuth;
     private FirebaseRecyclerAdapter<Moment,MomentViewHolder> firebaseRecyclerAdapter;
     String eventkey;
+
 
 
 
@@ -109,11 +111,30 @@ public class MomentFragment extends Fragment {
         ) {
             @Override
             protected void populateViewHolder(MomentViewHolder viewHolder, Moment model, int position) {
-
+                final String  EditKey=getRef(position).getKey();
                 viewHolder.setTitle(model.getTitle());
                 viewHolder.setDesc(model.getDesc());
                 viewHolder.setImage(getActivity(),model.getImage());
                 viewHolder.setUserName(model.getUserName());
+                viewHolder.mView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+
+
+                        FragmentManager fm3 = getActivity().getSupportFragmentManager();
+                        FragmentTransaction ft3 = fm3.beginTransaction();
+                        SingleMomentFragment singleMomentFragment = new SingleMomentFragment();
+                        Bundle sendKey = new Bundle();
+                        sendKey.putString("EditKey", EditKey);
+                        sendKey.putString("eventkey", eventkey);
+                        singleMomentFragment.setArguments(sendKey);
+                        ft3.replace(R.id.homeFragmentView,singleMomentFragment);
+                        ft3.addToBackStack(null);
+                        ft3.commit();
+
+                        return false;
+                    }
+                });
             }
         };
 
@@ -180,8 +201,8 @@ public class MomentFragment extends Fragment {
         }
 
         public void setUserName(String userName){
-            TextView viewUserName = (TextView)mView.findViewById(R.id.tv_view_posterName);
-            viewUserName.setText(userName);
+            //TextView viewUserName = (TextView)mView.findViewById(R.id.tv_view_posterName);
+           // viewUserName.setText(userName);
         }
     }
 
@@ -208,7 +229,6 @@ public class MomentFragment extends Fragment {
                 sendKey.putString("eventkey", eventkey);
                 addMomentFragment.setArguments(sendKey);
                 ft3.replace(R.id.homeFragmentView,addMomentFragment);
-                ft3.addToBackStack(null);
                 ft3.commit();
                 return true;
             default:

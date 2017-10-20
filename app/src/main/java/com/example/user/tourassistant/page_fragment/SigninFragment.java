@@ -54,19 +54,7 @@ public class SigninFragment extends Fragment {
 
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
 
-
-
-
-
-        final View v = inflater.inflate(R.layout.fragment_event, container, false);
-
-
-        return v;
-    }
 
 
 
@@ -93,7 +81,8 @@ public class SigninFragment extends Fragment {
                                     .setProviders(
                                             AuthUI.EMAIL_PROVIDER,
                                             AuthUI.GOOGLE_PROVIDER)
-                                    .setTheme(R.style.Theme_AppCompat_Transparent)
+                                    .setTheme(R.style.LoginTheme)
+                                    //.setLogo(R.mipmap.grocery)
                                     .build(),
                             RC_SIGN_IN);
                 }
@@ -124,10 +113,25 @@ public class SigninFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        if(mAuthStateListener == null){
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        HomeFragment homeFragment = new HomeFragment();
+        ft.replace(R.id.homeFragmentView,homeFragment);
+        ft.commit();}
 
     }
 
-
+    @Override
+    public void onStop() {
+        super.onStop();
+        if(mAuthStateListener == null){
+            FragmentManager fm = getActivity().getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            HomeFragment homeFragment = new HomeFragment();
+            ft.replace(R.id.homeFragmentView,homeFragment);
+            ft.commit();}
+    }
 
     private void onSignedInInitialize(String username) {
         mUsername = username;
@@ -140,7 +144,6 @@ public class SigninFragment extends Fragment {
         FragmentTransaction fte = fme.beginTransaction();
         EventFragment eventFragment = new EventFragment();
         fte.replace(R.id.homeFragmentView,eventFragment);
-        fte.addToBackStack(null);
         fte.commit();
 
           }

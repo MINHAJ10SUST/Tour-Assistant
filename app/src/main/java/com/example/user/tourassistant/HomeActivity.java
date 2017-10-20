@@ -9,7 +9,6 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -21,12 +20,8 @@ import com.example.user.tourassistant.activities.SampleActivityBase;
 import com.example.user.tourassistant.google_place.AllmapActivity;
 import com.example.user.tourassistant.google_place.Example;
 import com.example.user.tourassistant.google_place.RetrofitMaps;
-import com.example.user.tourassistant.page_fragment.AddExpenseFragment;
 import com.example.user.tourassistant.page_fragment.EventFragment;
-import com.example.user.tourassistant.page_fragment.ExpenseListFragment;
 import com.example.user.tourassistant.page_fragment.HomeFragment;
-import com.example.user.tourassistant.page_fragment.MapFragment;
-import com.example.user.tourassistant.page_fragment.MomentFragment;
 import com.example.user.tourassistant.page_fragment.SigninFragment;
 import com.example.user.tourassistant.page_fragment.WeatherFragment;
 import com.firebase.ui.auth.AuthUI;
@@ -38,7 +33,6 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -77,15 +71,13 @@ public class HomeActivity extends SampleActivityBase {
                     ft.addToBackStack(null);
                     ft.commit();
                     return true;
-                case R.id.navigation_dashboard:
+                case R.id.navigation_mytrip:
                     goMyTrip();
                     return true;
                 case R.id.navigation_notifications:
 
                     return true;
-                case R.id.navigation_tourmate:
 
-                    return true;
                 case R.id.navigation_account:
 
                     return true;
@@ -138,7 +130,7 @@ public class HomeActivity extends SampleActivityBase {
         FragmentTransaction ft = fm.beginTransaction();
         HomeFragment homeFragment = new HomeFragment();
         ft.add(R.id.homeFragmentView,homeFragment);
-        ft.addToBackStack(null);
+       // ft.addToBackStack(null);
         ft.commit();
 
 

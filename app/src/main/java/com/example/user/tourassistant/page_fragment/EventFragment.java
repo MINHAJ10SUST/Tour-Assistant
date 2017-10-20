@@ -109,7 +109,6 @@ public class EventFragment extends Fragment {
                         expenseFragment.setArguments(sendKey);
 
                         ft4.replace(R.id.homeFragmentView,expenseFragment);
-                        ft4.addToBackStack(null);
                         ft4.commit();
                     }
                 });
