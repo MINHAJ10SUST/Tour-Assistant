@@ -137,7 +137,6 @@ public class SingleMomentFragment extends Fragment {
         momentFragment.setArguments(sendKey);
 
         ft4.replace(R.id.homeFragmentView,momentFragment);
-        ft4.addToBackStack(null);
         ft4.commit();
 
 

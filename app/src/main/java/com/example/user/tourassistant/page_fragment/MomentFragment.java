@@ -130,7 +130,6 @@ public class MomentFragment extends Fragment {
                         sendKey.putString("eventkey", eventkey);
                         singleMomentFragment.setArguments(sendKey);
                         ft3.replace(R.id.homeFragmentView,singleMomentFragment);
-                        ft3.addToBackStack(null);
                         ft3.commit();
 
                         return false;

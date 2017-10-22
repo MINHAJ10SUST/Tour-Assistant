@@ -142,7 +142,7 @@ public class EventFragment extends Fragment {
                         momentFragment.setArguments(sendKey);
 
                         ft4.replace(R.id.homeFragmentView,momentFragment);
-                        ft4.addToBackStack(null);
+                        //ft4.addToBackStack(null);
                         ft4.commit();
                     }
                 });
@@ -160,7 +160,7 @@ public class EventFragment extends Fragment {
                         singleEventFragment.setArguments(sendKey);
 
                         ft4.replace(R.id.homeFragmentView,singleEventFragment);
-                        ft4.addToBackStack(null);
+                       // ft4.addToBackStack(null);
                         ft4.commit();
                         return false;
                     }
@@ -232,7 +232,7 @@ public class EventFragment extends Fragment {
                 FragmentTransaction ft3 = fm3.beginTransaction();
                 AddEventFragment addEventFragment = new AddEventFragment();
                 ft3.replace(R.id.homeFragmentView,addEventFragment);
-                ft3.addToBackStack(null);
+                //ft3.addToBackStack(null);
                 ft3.commit();
 
                 return true;

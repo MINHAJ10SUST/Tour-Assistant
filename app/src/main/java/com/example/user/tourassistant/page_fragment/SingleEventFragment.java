@@ -87,7 +87,7 @@ public class SingleEventFragment extends Fragment {
 
                 return true;
             case R.id.saveEvent:
-                changeEvent();
+                udateEvent();
 
                 return true;
             default:
@@ -118,7 +118,7 @@ public class SingleEventFragment extends Fragment {
 
     }
 
-    public void changeEvent(){
+    public void udateEvent(){
 
         chngeEventDatabase=FirebaseDatabase.getInstance().getReference().child("Events").child(mAuth.getCurrentUser().getUid()).child(eventkey);
         chngeEventDatabase.addValueEventListener(new ValueEventListener() {
@@ -157,7 +157,6 @@ public class SingleEventFragment extends Fragment {
         FragmentTransaction ft3 = fm3.beginTransaction();
         EventFragment eventFragment = new EventFragment();
         ft3.replace(R.id.homeFragmentView,eventFragment);
-        ft3.addToBackStack(null);
         ft3.commit();
 
 

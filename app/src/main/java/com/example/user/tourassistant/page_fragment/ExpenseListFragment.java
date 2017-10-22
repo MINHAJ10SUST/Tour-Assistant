@@ -51,7 +51,7 @@ public class ExpenseListFragment extends Fragment {
         getActivity().setTitle("Expense List");
         // Inflate the layout for this fragment
         eventkey = getArguments().getString("eventkey");
-        //Toast.makeText(getActivity(),eventkey,Toast.LENGTH_LONG).show();
+
         database = FirebaseDatabase.getInstance();
 
 
@@ -124,10 +124,6 @@ public class ExpenseListFragment extends Fragment {
             toDate.setText(value);
         }
 
-//        public void setBudget(String value){
-//            TextView budget=mView.findViewById(R.id.budgetRow);
-//            budget.setText(value);
-//        }
     }
 
 
@@ -154,7 +150,7 @@ public class ExpenseListFragment extends Fragment {
                 sendKey.putString("eventkey", eventkey);
                 addExpenseFragment.setArguments(sendKey);
                 ft5.replace(R.id.homeFragmentView,addExpenseFragment);
-                ft5.addToBackStack(null);
+                //ft5.addToBackStack(null);
                 ft5.commit();
                 return true;
             default:

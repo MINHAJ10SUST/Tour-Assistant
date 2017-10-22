@@ -46,8 +46,6 @@ public class HomeFragment extends Fragment {
         getActivity().setTitle("Tour Assistant");
         final View v = inflater.inflate(R.layout.fragment_home, container, false);
 
-//        bottomNavigationView=getActivity().findViewById(R.id.navigation);
-//        bottomNavigationView.setSelectedItemId(R.id.navigation_home);
         return v;
     }
 

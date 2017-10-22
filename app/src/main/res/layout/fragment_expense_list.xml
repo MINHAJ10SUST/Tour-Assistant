@@ -4,27 +4,14 @@
     android:layout_height="match_parent"
     tools:context="com.example.user.tourassistant.page_fragment.ExpenseListFragment">
 
-<android.support.v7.widget.CardView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/com_facebook_close"/>
-    </RelativeLayout>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
+
+    <android.support.v7.widget.RecyclerView
 
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/recyclerview_expenseList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"/>
-    </ScrollView>
-</android.support.v7.widget.CardView>
+
+
 </FrameLayout>
