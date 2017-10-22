@@ -49,7 +49,7 @@ public class AddMomentFragment extends Fragment {
 
     private static final int REQUEST_CAMERA = 1;
     private static final int GALLERY_REQUEST = 1;
-    private ImageButton addImage;
+    private ImageButton addImage,closeButton;
 
     private EditText addTitleET, addDescriptionET;
     private Button postMomentBTN;
@@ -72,6 +72,7 @@ public class AddMomentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().setTitle("Add Moment");
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add_moment, container, false);
     }
@@ -104,6 +105,14 @@ public class AddMomentFragment extends Fragment {
 
                           }
          });
+
+        closeButton=getActivity().findViewById(R.id.backFromAddmoment);
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goBack();
+            }
+        });
 
 
 
@@ -143,7 +152,7 @@ public class AddMomentFragment extends Fragment {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
             String currentDateandTime = sdf.format(new Date());
 
-            StorageReference filepath = mStorageRef.child("Moment_Image").child(currentDateandTime);
+            StorageReference filepath = mStorageRef.child("Moment_Image").child(eventkey).child(currentDateandTime);
             filepath.putFile(imageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -155,15 +164,7 @@ public class AddMomentFragment extends Fragment {
                             newPost.child("desc").setValue(description);
                             newPost.child("image").setValue(downloadUrl.toString());
 
-                            FragmentManager fm3 = getActivity().getSupportFragmentManager();
-                            FragmentTransaction ft3 = fm3.beginTransaction();
-                            MomentFragment momentFragment = new MomentFragment();
-                            Bundle sendKey = new Bundle();
-                            sendKey.putString("eventkey", eventkey);
-                            momentFragment.setArguments(sendKey);
-                            ft3.replace(R.id.homeFragmentView,momentFragment);
-                            ft3.addToBackStack(null);
-                            ft3.commit();
+                            goBack();
 
 
 
@@ -186,7 +187,18 @@ public class AddMomentFragment extends Fragment {
     }
 
 
+public void goBack(){
+    FragmentManager fm3 = getActivity().getSupportFragmentManager();
+    FragmentTransaction ft3 = fm3.beginTransaction();
+    MomentFragment momentFragment = new MomentFragment();
+    Bundle sendKey = new Bundle();
+    sendKey.putString("eventkey", eventkey);
+    momentFragment.setArguments(sendKey);
+    ft3.replace(R.id.homeFragmentView,momentFragment);
+    ft3.commit();
 
+
+}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -119,7 +119,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
                         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                         // move map camera
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                        mMap.animateCamera(CameraUpdateFactory.zoomTo(17));
+                        mMap.animateCamera(CameraUpdateFactory.zoomTo(5));
                         // mMap.animateCamera(CameraUpdateFactory.);
                     }
                 } catch (Exception e) {

@@ -22,15 +22,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.user.tourassistant.firebase.Expense;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.example.user.tourassistant.R;
 import com.example.user.tourassistant.firebase.Events;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,10 +48,12 @@ public class EventFragment extends Fragment {
 
     private RecyclerView eventListView;
     private FirebaseRecyclerAdapter<Events,EventViewHolder> firebaseRecyclerAdapter;
-    private DatabaseReference eventDatabase,userDatabase;
+    private DatabaseReference eventDatabase,expenseDatabase;
     FirebaseDatabase database;
     DatabaseReference myEventRef;
     private FirebaseAuth mAuth;
+
+
     private FirebaseUser mCurrentUser;
     //String keyid;
 
@@ -57,6 +65,7 @@ public class EventFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().setTitle("Events");
         database = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
@@ -72,6 +81,8 @@ public class EventFragment extends Fragment {
         eventListView.setHasFixedSize(true);
         eventListView.setLayoutManager(llm);
 
+
+
         // Inflate the layout for this fragment
         return view;
     }
@@ -81,6 +92,12 @@ public class EventFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
+    }
+
+    public int getTotallExpense(String expenseId, int duget){
+
+
+        return 70;
     }
 
     @Override
@@ -97,6 +114,7 @@ public class EventFragment extends Fragment {
                 viewHolder.setFromDate(model.getFromDate());
                 viewHolder.setToDate(model.getToDate());
                 viewHolder.setBudget(model.getBudget());
+                viewHolder.setBugetPcnt(getTotallExpense(keyid,Integer.parseInt(model.getBudget())));
                 viewHolder.expenseShowBt.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -128,6 +146,25 @@ public class EventFragment extends Fragment {
                         ft4.commit();
                     }
                 });
+
+                viewHolder.mView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+
+                        FragmentManager fm4 = getActivity().getSupportFragmentManager();
+                        FragmentTransaction ft4 = fm4.beginTransaction();
+                        SingleEventFragment  singleEventFragment  = new SingleEventFragment();
+
+                        Bundle sendKey = new Bundle();
+                        sendKey.putString("eventkey", keyid);
+                        singleEventFragment.setArguments(sendKey);
+
+                        ft4.replace(R.id.homeFragmentView,singleEventFragment);
+                        ft4.addToBackStack(null);
+                        ft4.commit();
+                        return false;
+                    }
+                });
             }
         };
         eventListView.setAdapter(firebaseRecyclerAdapter);
@@ -139,8 +176,8 @@ public class EventFragment extends Fragment {
     public static class EventViewHolder extends RecyclerView.ViewHolder{
 
         View mView;
-        ImageButton expenseShowBt;
-        ImageButton momentShowBt;
+        TextView expenseShowBt;
+        TextView momentShowBt;
         public EventViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
@@ -167,6 +204,11 @@ public class EventFragment extends Fragment {
         public void setBudget(String value){
             TextView budget=mView.findViewById(R.id.budgetRow);
             budget.setText("Aprox buget"+value);
+        }
+
+        public void setBugetPcnt(int totalExpense){
+            ProgressBar budgetP=mView.findViewById(R.id.determinateBar);
+            budgetP.setProgress(totalExpense);
         }
     }
 

@@ -48,6 +48,7 @@ public class ExpenseListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().setTitle("Expense List");
         // Inflate the layout for this fragment
         eventkey = getArguments().getString("eventkey");
         //Toast.makeText(getActivity(),eventkey,Toast.LENGTH_LONG).show();

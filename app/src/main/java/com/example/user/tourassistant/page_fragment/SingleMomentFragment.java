@@ -3,6 +3,7 @@ package com.example.user.tourassistant.page_fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -24,11 +25,15 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.user.tourassistant.R;
 import com.example.user.tourassistant.firebase.Moment;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
@@ -38,6 +43,7 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 public class SingleMomentFragment extends Fragment {
 
     private DatabaseReference mDatabase,SDatabase,userDatabase;
+     private FirebaseStorage mFirebaseStorage;
     private String eventkey,EditKey;
     private boolean dbflag=true;
     public SingleMomentFragment() {
@@ -52,25 +58,12 @@ public class SingleMomentFragment extends Fragment {
         eventkey=getArguments().getString("eventkey");
         mDatabase = FirebaseDatabase.getInstance().getReference().child("moments").child(eventkey).child(EditKey);
 
-//        if(dbflag){
-//            dbflag=false;
-//        mDatabase.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                setTitle(dataSnapshot.getValue(Moment.class).getTitle());
-//                setDesc(dataSnapshot.getValue(Moment.class).getDesc());
-//                setImage(getActivity(),dataSnapshot.getValue(Moment.class).getImage() );
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });}
+
+
         return inflater.inflate(R.layout.fragment_single_moment, container, false);
     }
+
+
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -130,10 +123,23 @@ public class SingleMomentFragment extends Fragment {
     }
 
     public void deletePost(){
-        EditKey=getArguments().getString("EditKey");
-        eventkey=getArguments().getString("eventkey");
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("moments").child(eventkey).child(EditKey);
-        mDatabase.setValue(null);
+
+
+        mDatabase.removeValue();
+
+
+        FragmentManager fm4 = getActivity().getSupportFragmentManager();
+        FragmentTransaction ft4 = fm4.beginTransaction();
+        MomentFragment momentFragment = new MomentFragment();
+
+        Bundle sendKey = new Bundle();
+        sendKey.putString("eventkey", eventkey);
+        momentFragment.setArguments(sendKey);
+
+        ft4.replace(R.id.homeFragmentView,momentFragment);
+        ft4.addToBackStack(null);
+        ft4.commit();
+
 
 
     }
@@ -143,7 +149,9 @@ public class SingleMomentFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-    }
+       }
+
+
 
     @Override
     public void onCreateOptionsMenu(
@@ -156,17 +164,8 @@ public class SingleMomentFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.deleteEvent:
                 deletePost();
-                FragmentManager fm4 = getActivity().getSupportFragmentManager();
-                FragmentTransaction ft4 = fm4.beginTransaction();
-                MomentFragment momentFragment = new MomentFragment();
 
-                Bundle sendKey = new Bundle();
-                sendKey.putString("eventkey", eventkey);
-                momentFragment.setArguments(sendKey);
 
-                ft4.replace(R.id.homeFragmentView,momentFragment);
-                ft4.addToBackStack(null);
-                ft4.commit();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

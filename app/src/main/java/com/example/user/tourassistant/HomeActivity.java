@@ -92,7 +92,6 @@ public class HomeActivity extends SampleActivityBase {
 
         sharedPref = getPreferences(Context.MODE_PRIVATE);
 
-        Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
         String userfl=sharedPref.getString("user",null);
 
         if(userfl==null){
@@ -270,6 +269,7 @@ public class HomeActivity extends SampleActivityBase {
                 return super.onOptionsItemSelected(item);
         }
     }
+
 
 
     public void getPlace(View view) throws GooglePlayServicesNotAvailableException, GooglePlayServicesRepairableException {

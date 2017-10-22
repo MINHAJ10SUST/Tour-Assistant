@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.user.tourassistant.R;
@@ -34,6 +35,7 @@ public class AddExpenseFragment extends Fragment {
 
     private View view;
     private EditText expense_DetailsET,expense_AmountET;
+    private ImageButton closeButton;
     private Button expense_SaveBT;
     FirebaseDatabase database;
     DatabaseReference myExpenseRef;
@@ -46,18 +48,36 @@ public class AddExpenseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().setTitle("Add Expense");
                 database = FirebaseDatabase.getInstance();
         eventkey = getArguments().getString("eventkey");
         database = FirebaseDatabase.getInstance();
         view=inflater.inflate(R.layout.fragment_add_expense, container, false);
         expense_DetailsET=view.findViewById(R.id.Expense_DetailsET);
         expense_AmountET=view.findViewById(R.id.Expense_AmountET);
+        closeButton=view.findViewById(R.id.backFromAddExpse);
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goBack();
+            }
+        });
 
 
         // Inflate the layout for this fragment
         return view;
     }
+public void goBack(){
 
+    FragmentManager fm4 = getActivity().getSupportFragmentManager();
+    FragmentTransaction ft4 = fm4.beginTransaction();
+    ExpenseListFragment expenseFragment = new ExpenseListFragment();
+    Bundle sendKey = new Bundle();
+    sendKey.putString("eventkey", eventkey);
+    expenseFragment.setArguments(sendKey);
+    ft4.replace(R.id.homeFragmentView,expenseFragment);
+    ft4.commit();
+}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -80,16 +100,7 @@ public class AddExpenseFragment extends Fragment {
                 myExpenseRef.child("Expense").setValue(expense_AmountET.getText().toString());
                 myExpenseRef.child("Date").setValue(date);
 
-                FragmentManager fm4 = getActivity().getSupportFragmentManager();
-                FragmentTransaction ft4 = fm4.beginTransaction();
-                ExpenseListFragment expenseFragment = new ExpenseListFragment();
-                Bundle sendKey = new Bundle();
-                sendKey.putString("eventkey", eventkey);
-                expenseFragment.setArguments(sendKey);
-
-                ft4.replace(R.id.homeFragmentView,expenseFragment);
-                ft4.addToBackStack(null);
-                ft4.commit();
+                goBack();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
