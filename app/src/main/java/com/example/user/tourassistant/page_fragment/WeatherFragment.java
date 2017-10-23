@@ -142,11 +142,14 @@ public class WeatherFragment extends Fragment {
 
 
 
-                for (int i=0;i<24;i++){
+                for (int i=0;i<5;i++){
+                    String day = response.body().getForecast().getForecastday().get(0).getDate().toString();
+
+
 
                     String image =response.body().getForecast().getForecastday().get(0).getHour().get(i).getCondition().getIcon().toString();
 
-                    movieList.add(new Movie("xx",image,"yyy"));
+                    movieList.add(new Movie(day,image,"yyy"));
                 }
                 mAdapter.notifyDataSetChanged();
 

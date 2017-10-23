@@ -20,6 +20,7 @@ import com.example.user.tourassistant.activities.SampleActivityBase;
 import com.example.user.tourassistant.google_place.AllmapActivity;
 import com.example.user.tourassistant.google_place.Example;
 import com.example.user.tourassistant.google_place.RetrofitMaps;
+import com.example.user.tourassistant.page_fragment.AlartFragment;
 import com.example.user.tourassistant.page_fragment.EventFragment;
 import com.example.user.tourassistant.page_fragment.HomeFragment;
 import com.example.user.tourassistant.page_fragment.SigninFragment;
@@ -79,7 +80,12 @@ public class HomeActivity extends SampleActivityBase {
                     return true;
 
                 case R.id.navigation_account:
-
+                    FragmentManager fma = getSupportFragmentManager();
+                    FragmentTransaction fta = fma.beginTransaction();
+                    AlartFragment alartFragment = new AlartFragment();
+                    fta.replace(R.id.homeFragmentView,alartFragment);
+                    fta.addToBackStack(null);
+                    fta.commit();
                     return true;
             }
             return false;

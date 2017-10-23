@@ -102,7 +102,6 @@ public class SingleEventFragment extends Fragment {
 
         eventDatabase = FirebaseDatabase.getInstance().getReference().child("Events").child(mAuth.getCurrentUser().getUid()).child(eventkey);
         eventDatabase.removeValue();
-
         expenceDatabase = FirebaseDatabase.getInstance().getReference().child("TExpense").child(eventkey);
         expenceDatabase.removeValue();
 
