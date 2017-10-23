@@ -4,10 +4,13 @@
     android:layout_height="match_parent"
     tools:context="com.example.user.tourassistant.page_fragment.AlartFragment">
 
-    <Button
-        android:id="@+id/getPlaceBt"
+
+    <android.support.v7.widget.RecyclerView
+
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/recyclerview_expenseList2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="place"/>
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"/>
 
 </FrameLayout>

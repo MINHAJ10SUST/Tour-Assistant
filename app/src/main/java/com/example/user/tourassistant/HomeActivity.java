@@ -76,16 +76,16 @@ public class HomeActivity extends SampleActivityBase {
                     goMyTrip();
                     return true;
                 case R.id.navigation_notifications:
-
-                    return true;
-
-                case R.id.navigation_account:
                     FragmentManager fma = getSupportFragmentManager();
                     FragmentTransaction fta = fma.beginTransaction();
                     AlartFragment alartFragment = new AlartFragment();
                     fta.replace(R.id.homeFragmentView,alartFragment);
                     fta.addToBackStack(null);
                     fta.commit();
+                    return true;
+
+                case R.id.navigation_account:
+
                     return true;
             }
             return false;
