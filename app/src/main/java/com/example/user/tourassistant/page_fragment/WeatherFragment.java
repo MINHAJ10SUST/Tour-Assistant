@@ -3,6 +3,9 @@ package com.example.user.tourassistant.page_fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,8 @@ import android.widget.Toast;
 import com.example.user.tourassistant.R;
 import com.example.user.tourassistant.weather.ApiTool;
 import com.example.user.tourassistant.weather.Example;
+import com.example.user.tourassistant.weather.Movie;
+import com.example.user.tourassistant.weather.MoviesAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +33,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class WeatherFragment extends Fragment {
 
     double latitude,longitude;
+    private List<Movie> movieList = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private MoviesAdapter mAdapter;
+    View view;
     public WeatherFragment() {
         // Required empty public constructor
     }
@@ -36,11 +45,72 @@ public class WeatherFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        view=inflater.inflate(R.layout.fragment_weather, container, false);
         latitude=23.777176;
         longitude=90.399452;
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+
+        mAdapter = new MoviesAdapter(movieList,getActivity());
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(mAdapter);
+        //prepareMovieData();
 
         showWeather(latitude,longitude);
-        return inflater.inflate(R.layout.fragment_weather, container, false);
+        return view;
+    }
+
+    private void prepareMovieData() {
+        Movie movie = new Movie("Mad Max: Fury Road", "Action & Adventure", "2015");
+        movieList.add(movie);
+
+        movie = new Movie("Inside Out", "Animation, Kids & Family", "2015");
+        movieList.add(movie);
+
+        movie = new Movie("Star Wars: Episode VII - The Force Awakens", "Action", "2015");
+        movieList.add(movie);
+
+        movie = new Movie("Shaun the Sheep", "Animation", "2015");
+        movieList.add(movie);
+
+        movie = new Movie("The Martian", "Science Fiction & Fantasy", "2015");
+        movieList.add(movie);
+
+        movie = new Movie("Mission: Impossible Rogue Nation", "Action", "2015");
+        movieList.add(movie);
+
+        movie = new Movie("Up", "Animation", "2009");
+        movieList.add(movie);
+
+        movie = new Movie("Star Trek", "Science Fiction", "2009");
+        movieList.add(movie);
+
+        movie = new Movie("The LEGO Movie", "Animation", "2014");
+        movieList.add(movie);
+
+        movie = new Movie("Iron Man", "Action & Adventure", "2008");
+        movieList.add(movie);
+
+        movie = new Movie("Aliens", "Science Fiction", "1986");
+        movieList.add(movie);
+
+        movie = new Movie("Chicken Run", "Animation", "2000");
+        movieList.add(movie);
+
+        movie = new Movie("Back to the Future", "Science Fiction", "1985");
+        movieList.add(movie);
+
+        movie = new Movie("Raiders of the Lost Ark", "Action & Adventure", "1981");
+        movieList.add(movie);
+
+        movie = new Movie("Goldfinger", "Action & Adventure", "1965");
+        movieList.add(movie);
+
+        movie = new Movie("Guardians of the Galaxy", "Science Fiction & Fantasy", "2014");
+        movieList.add(movie);
+
+        mAdapter.notifyDataSetChanged();
     }
 
 
@@ -72,86 +142,19 @@ public class WeatherFragment extends Fragment {
 
 
 
-                String hourCondText0 = response.body().getForecast().getForecastday().get(0).getHour().get(0).getCondition().getText().toString();
-                String hourCondText1 = response.body().getForecast().getForecastday().get(0).getHour().get(2).getCondition().getText().toString();
-                String hourCondText2 = response.body().getForecast().getForecastday().get(0).getHour().get(4).getCondition().getText().toString();
-                String hourCondText3 = response.body().getForecast().getForecastday().get(0).getHour().get(6).getCondition().getText().toString();
-                String hourCondText4 = response.body().getForecast().getForecastday().get(0).getHour().get(8).getCondition().getText().toString();
-                String hourCondText5 = response.body().getForecast().getForecastday().get(0).getHour().get(10).getCondition().getText().toString();
-                String hourCondText6 = response.body().getForecast().getForecastday().get(0).getHour().get(12).getCondition().getText().toString();
-                String hourCondText7 = response.body().getForecast().getForecastday().get(0).getHour().get(14).getCondition().getText().toString();
-                String hourCondText8 = response.body().getForecast().getForecastday().get(0).getHour().get(16).getCondition().getText().toString();
-                String hourCondText9 = response.body().getForecast().getForecastday().get(0).getHour().get(18).getCondition().getText().toString();
-                String hourCondText10 = response.body().getForecast().getForecastday().get(0).getHour().get(20).getCondition().getText().toString();
-                String hourCondText11 = response.body().getForecast().getForecastday().get(0).getHour().get(22).getCondition().getText().toString();
+                for (int i=0;i<24;i++){
 
+                    String image =response.body().getForecast().getForecastday().get(0).getHour().get(i).getCondition().getIcon().toString();
 
-                String hour0 = response.body().getForecast().getForecastday().get(0).getHour().get(0).getTime().substring(11,16).toString();
-                String hour1 = response.body().getForecast().getForecastday().get(0).getHour().get(2).getTime().substring(11,16).toString();
-                String hour2 = response.body().getForecast().getForecastday().get(0).getHour().get(4).getTime().substring(11,16).toString();
-                String hour3 = response.body().getForecast().getForecastday().get(0).getHour().get(6).getTime().substring(11,16).toString();
-                String hour4 = response.body().getForecast().getForecastday().get(0).getHour().get(8).getTime().substring(11,16).toString();
-                String hour5 = response.body().getForecast().getForecastday().get(0).getHour().get(10).getTime().substring(11,16).toString();
-                String hour6 = response.body().getForecast().getForecastday().get(0).getHour().get(12).getTime().substring(11,16).toString();
-                String hour7 = response.body().getForecast().getForecastday().get(0).getHour().get(14).getTime().substring(11,16).toString();
-                String hour8 = response.body().getForecast().getForecastday().get(0).getHour().get(16).getTime().substring(11,16).toString();
-                String hour9 = response.body().getForecast().getForecastday().get(0).getHour().get(18).getTime().substring(11,16).toString();
-                String hour10 = response.body().getForecast().getForecastday().get(0).getHour().get(20).getTime().substring(11,16).toString();
-                String hour11 = response.body().getForecast().getForecastday().get(0).getHour().get(22).getTime().substring(11,16).toString();
+                    movieList.add(new Movie("xx",image,"yyy"));
+                }
+                mAdapter.notifyDataSetChanged();
 
 
 
-                TextView time0 = getActivity(). findViewById(R.id.time0);
-                TextView time1 = getActivity(). findViewById(R.id.time1);
-                TextView time2 = getActivity(). findViewById(R.id.time2);
-                TextView time3 = getActivity(). findViewById(R.id.time3);
-                TextView time4 =getActivity(). findViewById(R.id.time4);
-                TextView time5 = getActivity(). findViewById(R.id.time5);
-                TextView time6 = getActivity(). findViewById(R.id.time6);
-                TextView time7 = getActivity(). findViewById(R.id.time7);
-                TextView time8 = getActivity(). findViewById(R.id.time8);
-                TextView time9 = getActivity(). findViewById(R.id.time9);
-                TextView time10 = getActivity(). findViewById(R.id.time10);
-                TextView time11 = getActivity(). findViewById(R.id.time11);
 
-                time0.setText(hour0);
-                time1.setText(hour1);
-                time2.setText(hour2);
-                time3.setText(hour3);
-                time4.setText(hour4);
-                time5.setText(hour5);
-                time6.setText(hour6);
-                time7.setText(hour7);
-                time8.setText(hour8);
-                time9.setText(hour9);
-                time10.setText(hour10);
-                time11.setText(hour11);
 
-                TextView cond0 = getActivity(). findViewById(R.id.condition0);
-                TextView cond1 = getActivity(). findViewById(R.id.condition1);
-                TextView cond2 = getActivity(). findViewById(R.id.condition2);
-                TextView cond3 = getActivity(). findViewById(R.id.condition3);
-                TextView cond4 = getActivity(). findViewById(R.id.condition4);
-                TextView cond5 = getActivity(). findViewById(R.id.condition5);
-                TextView cond6 = getActivity(). findViewById(R.id.condition6);
-                TextView cond7 = getActivity(). findViewById(R.id.condition7);
-                TextView cond8 = getActivity(). findViewById(R.id.condition8);
-                TextView cond9 = getActivity(). findViewById(R.id.condition9);
-                TextView cond10 = getActivity(). findViewById(R.id.condition10);
-                TextView cond11 = getActivity(). findViewById(R.id.condition11);
 
-                cond0.setText(hourCondText0);
-                cond1.setText(hourCondText1);
-                cond2.setText(hourCondText2);
-                cond3.setText(hourCondText3);
-                cond4.setText(hourCondText4);
-                cond5.setText(hourCondText5);
-                cond6.setText(hourCondText6);
-                cond7.setText(hourCondText7);
-                cond8.setText(hourCondText8);
-                cond9.setText(hourCondText9);
-                cond10.setText(hourCondText10);
-                cond11.setText(hourCondText11);
 
 
 

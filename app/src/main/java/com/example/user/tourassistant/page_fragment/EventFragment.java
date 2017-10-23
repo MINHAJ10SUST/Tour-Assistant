@@ -121,11 +121,10 @@ public class EventFragment extends Fragment {
                         FragmentManager fm4 = getActivity().getSupportFragmentManager();
                         FragmentTransaction ft4 = fm4.beginTransaction();
                         ExpenseListFragment expenseFragment = new ExpenseListFragment();
-
                         Bundle sendKey = new Bundle();
                         sendKey.putString("eventkey", keyid);
                         expenseFragment.setArguments(sendKey);
-
+                        ft4.addToBackStack("EventFragment");
                         ft4.replace(R.id.homeFragmentView,expenseFragment);
                         ft4.commit();
                     }
@@ -136,13 +135,11 @@ public class EventFragment extends Fragment {
                         FragmentManager fm4 = getActivity().getSupportFragmentManager();
                         FragmentTransaction ft4 = fm4.beginTransaction();
                         MomentFragment momentFragment = new MomentFragment();
-
                         Bundle sendKey = new Bundle();
                         sendKey.putString("eventkey", keyid);
                         momentFragment.setArguments(sendKey);
-
+                        ft4.addToBackStack("EventFragment");
                         ft4.replace(R.id.homeFragmentView,momentFragment);
-                        //ft4.addToBackStack(null);
                         ft4.commit();
                     }
                 });
@@ -154,13 +151,11 @@ public class EventFragment extends Fragment {
                         FragmentManager fm4 = getActivity().getSupportFragmentManager();
                         FragmentTransaction ft4 = fm4.beginTransaction();
                         SingleEventFragment  singleEventFragment  = new SingleEventFragment();
-
                         Bundle sendKey = new Bundle();
                         sendKey.putString("eventkey", keyid);
                         singleEventFragment.setArguments(sendKey);
-
+                        ft4.addToBackStack("EventFragment");
                         ft4.replace(R.id.homeFragmentView,singleEventFragment);
-                       // ft4.addToBackStack(null);
                         ft4.commit();
                         return false;
                     }
@@ -212,6 +207,8 @@ public class EventFragment extends Fragment {
         }
     }
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -221,6 +218,7 @@ public class EventFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(
             Menu menu, MenuInflater inflater) {
+        menu.clear();
         inflater.inflate(R.menu.event_manu, menu);
     }
 
@@ -231,8 +229,8 @@ public class EventFragment extends Fragment {
                 FragmentManager fm3 = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft3 = fm3.beginTransaction();
                 AddEventFragment addEventFragment = new AddEventFragment();
+                ft3.addToBackStack("EventFragment");
                 ft3.replace(R.id.homeFragmentView,addEventFragment);
-                //ft3.addToBackStack(null);
                 ft3.commit();
 
                 return true;
@@ -240,6 +238,9 @@ public class EventFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
+
 
 
 }

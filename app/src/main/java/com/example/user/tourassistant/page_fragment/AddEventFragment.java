@@ -94,7 +94,6 @@ public class AddEventFragment extends Fragment {
                 FragmentTransaction ft3 = fm3.beginTransaction();
                 EventFragment eventFragment = new EventFragment();
                 ft3.replace(R.id.homeFragmentView,eventFragment);
-                //ft3.addToBackStack(null);
                 ft3.commit();
             }
         });
@@ -171,13 +170,13 @@ public class AddEventFragment extends Fragment {
                 FragmentTransaction ft3 = fm3.beginTransaction();
                 EventFragment eventFragment = new EventFragment();
                 ft3.replace(R.id.homeFragmentView,eventFragment);
-                //ft3.addToBackStack(null);
                 ft3.commit();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
 
 
 }

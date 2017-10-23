@@ -149,13 +149,16 @@ public class ExpenseListFragment extends Fragment {
                 Bundle sendKey = new Bundle();
                 sendKey.putString("eventkey", eventkey);
                 addExpenseFragment.setArguments(sendKey);
+                ft5.addToBackStack("ExpenseListFragment");
                 ft5.replace(R.id.homeFragmentView,addExpenseFragment);
-                //ft5.addToBackStack(null);
                 ft5.commit();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
+
 
 }

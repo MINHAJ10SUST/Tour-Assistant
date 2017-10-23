@@ -114,11 +114,8 @@ public class SigninFragment extends Fragment {
     public void onPause() {
         super.onPause();
         if(mAuthStateListener == null){
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        HomeFragment homeFragment = new HomeFragment();
-        ft.replace(R.id.homeFragmentView,homeFragment);
-        ft.commit();}
+            goHome();
+        }
 
     }
 
@@ -126,11 +123,8 @@ public class SigninFragment extends Fragment {
     public void onStop() {
         super.onStop();
         if(mAuthStateListener == null){
-            FragmentManager fm = getActivity().getSupportFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            HomeFragment homeFragment = new HomeFragment();
-            ft.replace(R.id.homeFragmentView,homeFragment);
-            ft.commit();}
+            goHome();
+        }
     }
 
     private void onSignedInInitialize(String username) {
@@ -140,12 +134,8 @@ public class SigninFragment extends Fragment {
         editor.putString("user",mUsername);
         editor.commit();
         editor.apply();
-        FragmentManager fme = getActivity().getSupportFragmentManager();
-        FragmentTransaction fte = fme.beginTransaction();
-        EventFragment eventFragment = new EventFragment();
-        fte.replace(R.id.homeFragmentView,eventFragment);
-        fte.commit();
 
+        goToEvent();
           }
 
     private void onSignedOutCleanup() {
@@ -159,6 +149,26 @@ public class SigninFragment extends Fragment {
 
 
     }
+
+    public void goHome(){
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        HomeFragment homeFragment = new HomeFragment();
+        ft.replace(R.id.homeFragmentView,homeFragment);
+        ft.commit();
+
+    }
+
+    public void goToEvent(){
+        FragmentManager fme = getActivity().getSupportFragmentManager();
+        FragmentTransaction fte = fme.beginTransaction();
+        EventFragment eventFragment = new EventFragment();
+        fte.replace(R.id.homeFragmentView,eventFragment);
+        fte.commit();
+    }
+
+
+
 
 
 

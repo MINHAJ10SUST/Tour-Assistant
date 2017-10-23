@@ -128,6 +128,7 @@ public class MomentFragment extends Fragment {
                         Bundle sendKey = new Bundle();
                         sendKey.putString("EditKey", EditKey);
                         sendKey.putString("eventkey", eventkey);
+                        ft3.addToBackStack("MomentFragment");
                         singleMomentFragment.setArguments(sendKey);
                         ft3.replace(R.id.homeFragmentView,singleMomentFragment);
                         ft3.commit();
@@ -167,14 +168,9 @@ public class MomentFragment extends Fragment {
             final ProgressBar progressBar = new ProgressBar(imgContext);
             ImageView viewImage = (ImageView)mView.findViewById(R.id.iv_view_image);
 
-            //Picasso.with(imgContext).load(image).into(viewImage);
-            //Glide.with(imgContext).load(image).into(viewImage);
+
             int radius = 30; // corner radius, higher value = more rounded
             int margin = 10; // crop margin, set to 0 for corners with no crop
-           /* Glide.with(imgContext)
-                    .load(image)
-                    .bitmapTransform(new RoundedCornersTransformation(imgContext, radius, margin))
-                    .into(viewImage);*/
 
             progressBar.setVisibility(View.VISIBLE);
 
@@ -228,6 +224,7 @@ public class MomentFragment extends Fragment {
                 Bundle sendKey = new Bundle();
                 sendKey.putString("eventkey", eventkey);
                 addMomentFragment.setArguments(sendKey);
+                ft3.addToBackStack("MomentFragment");
                 ft3.replace(R.id.homeFragmentView,addMomentFragment);
                 ft3.commit();
                 return true;
@@ -235,5 +232,8 @@ public class MomentFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
+
 
 }
