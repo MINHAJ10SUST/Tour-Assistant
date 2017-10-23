@@ -32,6 +32,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
@@ -49,6 +53,12 @@ public class AddEventFragment extends Fragment {
     DatabaseReference myEventRef;
     private FirebaseAuth mAuth;
     private FirebaseUser mCurrentUser;
+
+    private int year, month, day, hour, minute, year2, month2, day2, hour2, minute2;
+    private Calendar calendar, calendar2;
+    private boolean is24Hours, is24Hours2;
+    private SimpleDateFormat sdfDate, sdfDate2, sdfTime;
+    private final long threeDays = 3 * 24 * 60 * 60 * 1000;
 
 
     public AddEventFragment() {
@@ -94,10 +104,48 @@ public class AddEventFragment extends Fragment {
                 FragmentTransaction ft3 = fm3.beginTransaction();
                 EventFragment eventFragment = new EventFragment();
                 ft3.replace(R.id.homeFragmentView,eventFragment);
+                //ft3.addToBackStack(null);
                 ft3.commit();
             }
         });
 
+
+
+        calendar = Calendar.getInstance(Locale.getDefault());
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH);
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+        hour = calendar.get(Calendar.HOUR);
+        minute = calendar.get(Calendar.MINUTE);
+        is24Hours = false;
+
+        calendar2 = Calendar.getInstance(Locale.getDefault());
+        year2 = calendar2.get(Calendar.YEAR);
+        month2 = calendar2.get(Calendar.MONTH);
+        day2 = calendar2.get(Calendar.DAY_OF_MONTH);
+        hour2 = calendar2.get(Calendar.HOUR);
+        minute2 = calendar2.get(Calendar.MINUTE);
+        is24Hours2 = false;
+        fromDateEt.setInputType(InputType.TYPE_NULL);
+        fromDateEt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), datelistener, year, month, day);
+                datePickerDialog.getDatePicker().setMinDate(Calendar.getInstance(Locale.getDefault()).getTimeInMillis());
+//                datePickerDialog.getDatePicker().setMaxDate(Calendar.getInstance(Locale.getDefault()).getTimeInMillis() + threeDays);
+                datePickerDialog.show();
+            }
+        });
+        toDateET.setInputType(InputType.TYPE_NULL);
+        toDateET.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog datePickerDialog2 = new DatePickerDialog(getContext(), datelistener2, year2, month2, day2);
+                datePickerDialog2.getDatePicker().setMinDate(Calendar.getInstance(Locale.getDefault()).getTimeInMillis() + threeDays);
+//                datePickerDialog2.getDatePicker().setMaxDate(Calendar.getInstance(Locale.getDefault()).getTimeInMillis() + threeDays + threeDays);
+                datePickerDialog2.show();
+            }
+        });
 
 
 
@@ -105,6 +153,37 @@ public class AddEventFragment extends Fragment {
         return view;
     }
 
+
+    private DatePickerDialog.OnDateSetListener datelistener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+            //btnDatePicker.setText(day + "/" + (month+1) + "/" + year);
+
+            /*calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, (month));
+            calendar.set(Calendar.DAY_OF_MONTH, day);*/
+            calendar.set(year, month, day);
+
+            sdfDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            fromDateEt.setText(sdfDate.format(calendar.getTime()));
+
+        }
+    };
+
+    private DatePickerDialog.OnDateSetListener datelistener2 = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+            //btnDatePicker.setText(day + "/" + (month+1) + "/" + year);
+
+            /*calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, (month));
+            calendar.set(Calendar.DAY_OF_MONTH, day);*/
+            calendar2.set(year,month,day);
+
+            sdfDate2 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            toDateET.setText(sdfDate2.format(calendar2.getTime()));
+        }
+    };
 
     private void openAutocompleteActivity() {
         try {
@@ -170,13 +249,13 @@ public class AddEventFragment extends Fragment {
                 FragmentTransaction ft3 = fm3.beginTransaction();
                 EventFragment eventFragment = new EventFragment();
                 ft3.replace(R.id.homeFragmentView,eventFragment);
+                //ft3.addToBackStack(null);
                 ft3.commit();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
 
 }
