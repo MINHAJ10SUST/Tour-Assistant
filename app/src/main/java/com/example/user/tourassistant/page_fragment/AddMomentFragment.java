@@ -3,11 +3,16 @@ package com.example.user.tourassistant.page_fragment;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Parcelable;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -31,14 +36,20 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -50,6 +61,7 @@ public class AddMomentFragment extends Fragment {
     private static final int REQUEST_CAMERA = 1;
     private static final int GALLERY_REQUEST = 1;
     private ImageButton addImage,closeButton;
+    private Uri outputFileUri;
 
     private EditText addTitleET, addDescriptionET;
     private Button postMomentBTN;
@@ -95,12 +107,16 @@ public class AddMomentFragment extends Fragment {
         addDescriptionET = (EditText) getActivity().findViewById(R.id.et_add_description);
 
         progressDialog = new ProgressDialog(getActivity());
+
+
         addImage.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
-                               Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                               galleryIntent.setType("image/*");
-                               startActivityForResult(galleryIntent, GALLERY_REQUEST);
+
+                 openImageIntent();
+                               /*Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                               galleryIntent.setType("image*//*");
+                               startActivityForResult(galleryIntent, GALLERY_REQUEST);*/
 
 
                           }
@@ -125,9 +141,80 @@ public class AddMomentFragment extends Fragment {
     }
 
 
+    private void openImageIntent() {
+
+        // Determine Uri of camera image to save.
+
+
+        final File root = new File(Environment.getExternalStorageDirectory() + File.separator + "MyDir" + File.separator);
+        root.mkdirs();
+        final String fname = "img_"+ System.currentTimeMillis() + ".jpg";
+        final File sdImageMainDirectory = new File(root, fname);
+        outputFileUri = Uri.fromFile(sdImageMainDirectory);
+
+
+
+
+        // Camera.
+        final List<Intent> cameraIntents = new ArrayList<Intent>();
+        final Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        final PackageManager packageManager = getActivity().getPackageManager();
+        final List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
+        for(ResolveInfo res : listCam) {
+            final String packageName = res.activityInfo.packageName;
+            final Intent intent = new Intent(captureIntent);
+            intent.setComponent(new ComponentName(packageName, res.activityInfo.name));
+            intent.setPackage(packageName);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+            cameraIntents.add(intent);
+        }
+
+        // Filesystem.
+        final Intent galleryIntent = new Intent();
+        galleryIntent.setType("image//*");
+        galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+
+        // Chooser of filesystem options.
+        final Intent chooserIntent = Intent.createChooser(galleryIntent, "Select Source");
+
+        // Add the camera options.
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, cameraIntents.toArray(new Parcelable[cameraIntents.size()]));
+
+        startActivityForResult(chooserIntent, REQUEST_CAMERA);
+    }
 
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_CAMERA) {
+                final boolean isCamera;
+                if (data == null || data.getData() == null) {
+                    isCamera = true;
+                } else {
+                    final String action = data.getAction();
+                    if (action == null) {
+                        isCamera = false;
+                    } else {
+                        isCamera = action.equals(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    }
+                }
+
+                Uri selectedImageUri;
+                if (isCamera) {
+                    selectedImageUri = outputFileUri;
+                    addImage.setImageURI(selectedImageUri);
+                } else {
+                    selectedImageUri = data == null ? null : data.getData();
+                    addImage.setImageURI(selectedImageUri);
+                }
+            }
+        }
+
+
+    }
+
+   /* @Override
     public void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
 
@@ -139,7 +226,7 @@ public class AddMomentFragment extends Fragment {
 
 
 
-    }
+    }*/
 
 
 

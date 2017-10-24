@@ -4,7 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Tour-Assistant-master.iml" filepath="$PROJECT_DIR$/Tour-Assistant-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/Tour-Assistant-minhaj.iml" filepath="$PROJECT_DIR$/Tour-Assistant-minhaj.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Tour-Assistant-ramzan2.iml" filepath="$PROJECT_DIR$/Tour-Assistant-ramzan2.iml" />
       <module fileurl="file://$PROJECT_DIR$/TourAssistant.iml" filepath="$PROJECT_DIR$/TourAssistant.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
