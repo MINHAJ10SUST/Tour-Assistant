@@ -8,6 +8,9 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,6 +39,8 @@ import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,6 +61,9 @@ public class HomeActivity extends SampleActivityBase {
     private boolean signoutflag;
     private FirebaseAuth mFirebaseAuth;
     private SharedPreferences sharedPref;
+    private ArrayList<TopPlace> topPlaces;
+    private RecyclerView topPlaceRecyclerView;
+    private TopPlaceAdapter topPlaceAdapter;
 
 
 
@@ -146,6 +154,13 @@ public class HomeActivity extends SampleActivityBase {
 
 
 
+        /*topPlaces = getTopPlaceInfo("restaurant", latitude,longitude);
+        topPlaceRecyclerView = (RecyclerView)findViewById(R.id.top_places_recyclerview);
+        topPlaceAdapter = new TopPlaceAdapter(this,topPlaces);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+        topPlaceRecyclerView.setLayoutManager(mLayoutManager);
+        topPlaceRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        topPlaceRecyclerView.setAdapter(topPlaceAdapter);*/
 
 
 
@@ -287,16 +302,12 @@ public class HomeActivity extends SampleActivityBase {
     public void getPlace(View view) throws GooglePlayServicesNotAvailableException, GooglePlayServicesRepairableException {
         openAutocompleteActivity();
     }
-
     public void getGooglePlaceInfo(String type, double latitude,double longitude){
-
         String url = "https://maps.googleapis.com/maps/";
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
         RetrofitMaps service = retrofit.create(RetrofitMaps.class);
         Call<Example> call=service.getNearbyPlaces(type,latitude+","+longitude,10000);
         call.enqueue(new Callback<Example>() {
@@ -310,20 +321,45 @@ public class HomeActivity extends SampleActivityBase {
                     Glide.with(getApplicationContext()).load(photoUrl).asBitmap()
                             .error(R.drawable.coxbazer).centerCrop().into(homeImage);
                 }
-
+            }
+            @Override
+            public void onFailure(Call<Example> call, Throwable t) {
 
             }
+        });
+    }
 
+
+   /* public ArrayList<TopPlace> getTopPlaceInfo(String type, double latitude, double longitude){
+
+        final ArrayList<TopPlace>topPlaces = new ArrayList<>();
+
+        String url = "https://maps.googleapis.com/maps/";
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        RetrofitMaps service = retrofit.create(RetrofitMaps.class);
+        Call<Example> call=service.getNearbyPlaces(type,latitude+","+longitude,10000);
+        call.enqueue(new Callback<Example>() {
+            @Override
+            public void onResponse(Call<Example> call, Response<Example> response) {
+
+                for (int i = 0; i <10; i++) {
+                    String placeName = response.body().getResults().get(i).getName();
+                    String photoUrl = String.format("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + response.body().getResults().get(i).getPhotos().get(0).getPhotoReference() + "&key=AIzaSyA1GDN-skUP2mxHOAJiaJiIdpvKMKJuJEA");
+                    topPlaces.add(new TopPlace(placeName,photoUrl));
+                }
+            }
             @Override
             public void onFailure(Call<Example> call, Throwable t) {
 
             }
         });
 
-
-
+        return topPlaces;
     }
-
+*/
 
 
 
