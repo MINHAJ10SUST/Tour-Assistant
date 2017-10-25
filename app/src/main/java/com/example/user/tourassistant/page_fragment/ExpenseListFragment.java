@@ -40,6 +40,7 @@ public class ExpenseListFragment extends Fragment {
 
     private RecyclerView eventListView;
     private TextView cost,budget;
+
     private ProgressBar budgetPercent;
     private FirebaseRecyclerAdapter<Expense,EventViewHolder1> firebaseRecyclerAdapter;
     private DatabaseReference eventDatabase,userDatabase;

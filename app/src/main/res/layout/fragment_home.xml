@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp">
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/homeImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -28,18 +28,23 @@
                 android:layout_alignBottom="@id/homeImage"
                 android:layout_centerHorizontal="true"
                 android:onClick="getPlace"
-                android:text="Nearby" />
+                android:text="Choose Location"
+                android:textAllCaps="false"
+                android:background="@drawable/btn_background"/>
         </RelativeLayout>
 
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/cardview_dark_background">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="3dp"
+                android:paddingLeft="1dp"
+                android:paddingRight="1dp"
+                android:paddingBottom="1dp"
                 android:background="@color/cardview_dark_background"
                 android:orientation="vertical">
 
@@ -47,7 +52,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="1dp"
-                    android:background="@color/cardview_dark_background"
                     android:orientation="horizontal">
 
                     <RelativeLayout
@@ -125,7 +129,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="1dp"
-                    android:background="@color/cardview_dark_background"
                     android:orientation="horizontal">
 
                     <RelativeLayout
@@ -184,16 +187,18 @@
                             android:id="@+id/Bank"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
                             android:background="@drawable/bank"
-                            android:onClick="showMapCtg" />
+                            android:onClick="showMapCtg"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignEnd="@+id/textView3" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/Bank"
                             android:layout_centerHorizontal="true"
-                            android:text="Bank" />
+                            android:text="Bank"
+                            android:id="@+id/textView3" />
                     </RelativeLayout>
 
 
@@ -202,8 +207,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="1dp"
-                    android:background="@color/cardview_dark_background"
                     android:orientation="horizontal">
 
                     <RelativeLayout
@@ -217,9 +220,10 @@
                             android:id="@+id/Pharmacy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
                             android:background="@drawable/pharmacy"
-                            android:onClick="showMapCtg" />
+                            android:onClick="showMapCtg"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerHorizontal="true" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -240,9 +244,10 @@
                             android:id="@+id/Weather"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
                             android:background="@drawable/weather"
-                            android:onClick="showWeather" />
+                            android:onClick="showWeather"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerHorizontal="true" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -263,7 +268,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:background="@drawable/uber2" />
+                            android:background="@drawable/uber2"></ImageButton>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -275,13 +280,17 @@
 
 
                 </LinearLayout>
+
+
             </LinearLayout>
+
+
         </android.support.v7.widget.CardView>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Top Places"
+            android:text="Nearby Places"
             android:padding="5dp"
             android:textStyle="bold"
             android:textSize="18sp"/>

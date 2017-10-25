@@ -1,6 +1,8 @@
 package com.example.user.tourassistant.page_fragment;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -63,7 +65,7 @@ public class WeatherFragment extends Fragment {
     private RecyclerView weekRecyclerview;
     private ArrayList<WeeklyUpdate>weeklyUpdates;
     private WeeklyAdapter weeklyAdapter;
-
+    private SharedPreferences sharedPref;
 
     double latitude,longitude;
     public WeatherFragment() {
@@ -74,8 +76,11 @@ public class WeatherFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        latitude=23.777176;
-        longitude=90.399452;
+        sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        String placeName=sharedPref.getString("placeName","Dhaka");
+        latitude=sharedPref.getFloat("latitude",23);
+        longitude=sharedPref.getFloat("longitude",90);
+
 
 
 

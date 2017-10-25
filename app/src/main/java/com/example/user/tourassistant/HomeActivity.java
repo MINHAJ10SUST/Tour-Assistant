@@ -74,7 +74,6 @@ public class HomeActivity extends SampleActivityBase {
                     FragmentTransaction ft = fm.beginTransaction();
                     HomeFragment homeFragment = new HomeFragment();
                     ft.replace(R.id.homeFragmentView,homeFragment);
-                    ft.addToBackStack(null);
                     ft.commit();
                     return true;
                 case R.id.navigation_mytrip:
@@ -85,23 +84,45 @@ public class HomeActivity extends SampleActivityBase {
                     FragmentTransaction fta = fma.beginTransaction();
                     AlartFragment alartFragment = new AlartFragment();
                     fta.replace(R.id.homeFragmentView,alartFragment);
-                    fta.addToBackStack(null);
                     fta.commit();
                     return true;
 
                 case R.id.navigation_account:
-                    FragmentManager fmac = getSupportFragmentManager();
-                    FragmentTransaction fac = fmac.beginTransaction();
-                    UserFragment userFragment = new UserFragment();
-                    fac.replace(R.id.homeFragmentView,userFragment);
-                    fac.addToBackStack(null);
-                    fac.commit();
+                    goMyAccont();
                     return true;
             }
             return false;
         }
 
     };
+
+    public void goMyAccont(){
+
+        sharedPref = getPreferences(Context.MODE_PRIVATE);
+
+        String userfl=sharedPref.getString("user",null);
+
+        if(userfl==null){
+
+            FragmentManager fme = getSupportFragmentManager();
+            FragmentTransaction fte = fme.beginTransaction();
+            SigninFragment signinFragment = new SigninFragment();
+            fte.replace(R.id.homeFragmentView,signinFragment);
+            fte.commit();
+
+
+        }
+        if(userfl!=null){
+
+            FragmentManager fmac = getSupportFragmentManager();
+            FragmentTransaction fac = fmac.beginTransaction();
+            UserFragment userFragment = new UserFragment();
+            fac.replace(R.id.homeFragmentView,userFragment);
+            fac.commit();
+
+
+        }
+    }
 
 
     public void goMyTrip(){
@@ -247,45 +268,6 @@ public class HomeActivity extends SampleActivityBase {
     }
 
 
-//
-//    public void getPlace(View view) throws GooglePlayServicesNotAvailableException, GooglePlayServicesRepairableException {
-//        openAutocompleteActivity();
-//    }
-
-    public void getGooglePlaceInfo(String type, double latitude,double longitude){
-
-        String url = "https://maps.googleapis.com/maps/";
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        RetrofitMaps service = retrofit.create(RetrofitMaps.class);
-        Call<Example> call=service.getNearbyPlaces(type,latitude+","+longitude,10000);
-        call.enqueue(new Callback<Example>() {
-            @Override
-            public void onResponse(Call<Example> call, Response<Example> response) {
-
-                String placeName = response.body().getResults().get(0).getName();
-                homeImage= (ImageView) findViewById(R.id.homeImage);
-                if(response.body().getResults().get(0).getPhotos().get(0).getPhotoReference()!=null) {
-                    String photoUrl = String.format("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + response.body().getResults().get(0).getPhotos().get(0).getPhotoReference() + "&key=AIzaSyA1GDN-skUP2mxHOAJiaJiIdpvKMKJuJEA");
-                    Glide.with(getApplicationContext()).load(photoUrl).asBitmap()
-                            .error(R.drawable.coxbazer).centerCrop().into(homeImage);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<Example> call, Throwable t) {
-
-            }
-        });
-
-
-
-    }
 
 
 

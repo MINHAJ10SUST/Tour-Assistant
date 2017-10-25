@@ -149,14 +149,14 @@ public class HomeFragment extends Fragment {
 
                     if(response.body().getResults().get(i).getPhotos().size()>0){
                         String placeName;
-                    if(response.body().getResults().get(i).getName()==null){
-                        placeName="unknown";
-                    }
-                    else{
-                        placeName = response.body().getResults().get(i).getName();
-                    }
-                    String photoUrl = String.format("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + response.body().getResults().get(i).getPhotos().get(0).getPhotoReference() + "&key=AIzaSyA1GDN-skUP2mxHOAJiaJiIdpvKMKJuJEA");
-                    topPlaces.add(new TopPlace(placeName,photoUrl));
+                        if(response.body().getResults().get(i).getName()==null){
+                            placeName="unknown";
+                        }
+                        else{
+                            placeName = response.body().getResults().get(i).getName();
+                        }
+                        String photoUrl = String.format("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + response.body().getResults().get(i).getPhotos().get(0).getPhotoReference() + "&key=AIzaSyA1GDN-skUP2mxHOAJiaJiIdpvKMKJuJEA");
+                        topPlaces.add(new TopPlace(placeName,photoUrl));
                     }
                 }
                 if(response.body().getResults().size()>0) {

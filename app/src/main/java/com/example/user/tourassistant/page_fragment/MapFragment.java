@@ -3,6 +3,7 @@ package com.example.user.tourassistant.page_fragment;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
@@ -53,6 +54,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
     double latitude;
     double longitude;
     private int PROXIMITY_RADIUS = 1000;
+
+
 
     public MapFragment(){
 
