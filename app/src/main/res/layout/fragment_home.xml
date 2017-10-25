@@ -1,15 +1,9 @@
-
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.user.tourassistant.page_fragment.HomeFragment">
-<ScrollView
-    android:layout_width="368dp"
-    android:layout_height="wrap_content"
-    tools:layout_editor_absoluteY="0dp"
-    tools:layout_editor_absoluteX="8dp">
 
 
     <LinearLayout
@@ -61,8 +55,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="1dp"
                         android:layout_weight="1"
-                        android:background="#ffffff"
-                        >
+                        android:background="#ffffff">
 
                         <ImageButton
                             android:id="@+id/Hotel"
@@ -70,13 +63,13 @@
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:background="@drawable/hotel"
-                            android:onClick="showMapCtg"/>
+                            android:onClick="showMapCtg" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignEnd="@id/Hotel"
                             android:layout_below="@id/Hotel"
+                            android:layout_centerHorizontal="true"
                             android:text="Hotel" />
                     </RelativeLayout>
 
@@ -93,15 +86,14 @@
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:background="@drawable/restaurant"
-                            android:onClick="showMapCtg"/>
+                            android:onClick="showMapCtg" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignEnd="@id/Restaurant"
-                            android:layout_below="@id/Restaurant"
-                            android:text="Restaurant"
-                            android:layout_centerHorizontal="true"/>
+                            android:layout_below="@+id/Restaurant"
+                            android:layout_centerHorizontal="true"
+                            android:text="Restaurant" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -116,13 +108,13 @@
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:background="@drawable/cafe"
-                            android:onClick="showMapCtg"/>
+                            android:onClick="showMapCtg" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignEnd="@id/Cafe"
                             android:layout_below="@id/Cafe"
+                            android:layout_centerHorizontal="true"
                             android:text="Cafe" />
                     </RelativeLayout>
 
@@ -149,13 +141,13 @@
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:background="@drawable/grocery"
-                            android:onClick="showMapCtg"/>
+                            android:onClick="showMapCtg" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignEnd="@id/Grocery"
                             android:layout_below="@id/Grocery"
+                            android:layout_centerHorizontal="true"
                             android:text="Grocery" />
                     </RelativeLayout>
 
@@ -172,13 +164,13 @@
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:background="@drawable/atm"
-                            android:onClick="showMapCtg"/>
+                            android:onClick="showMapCtg" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignEnd="@id/Atm"
                             android:layout_below="@id/Atm"
+                            android:layout_centerHorizontal="true"
                             android:text="Atm" />
                     </RelativeLayout>
 
@@ -194,104 +186,117 @@
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:background="@drawable/bank"
-                            android:onClick="showMapCtg"/>
+                            android:onClick="showMapCtg" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignEnd="@id/Bank"
                             android:layout_below="@id/Bank"
+                            android:layout_centerHorizontal="true"
                             android:text="Bank" />
                     </RelativeLayout>
 
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_marginBottom="1dp"
                     android:background="@color/cardview_dark_background"
-                    >
+                    android:orientation="horizontal">
+
                     <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="1dp"
                         android:layout_weight="1"
-                        android:background="#ffffff"
-                        android:layout_marginRight="1dp">
+                        android:background="#ffffff">
+
                         <ImageButton
                             android:id="@+id/Pharmacy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
                             android:background="@drawable/pharmacy"
-                            android:onClick="showMapCtg"
-                            android:layout_centerHorizontal="true"/>
+                            android:onClick="showMapCtg" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Pharmacy"
                             android:layout_below="@id/Pharmacy"
-                            android:layout_alignEnd="@id/Pharmacy"/>
+                            android:layout_centerHorizontal="true"
+                            android:text="Pharmacy" />
                     </RelativeLayout>
+
                     <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="#ffffff"
                         android:layout_marginRight="1dp"
-                        >
+                        android:layout_weight="1"
+                        android:background="#ffffff">
+
                         <ImageButton
                             android:id="@+id/Weather"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/weather"
                             android:layout_centerHorizontal="true"
-                            android:onClick="showWeather"/>
+                            android:background="@drawable/weather"
+                            android:onClick="showWeather" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Weather"
                             android:layout_below="@id/Weather"
-                            android:layout_alignEnd="@id/Weather"/>
+                            android:layout_centerHorizontal="true"
+                            android:text="Weather" />
                     </RelativeLayout>
+
                     <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="#ffffff">
+
                         <ImageButton
                             android:id="@+id/Uber"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/uber2"
-                            android:layout_centerHorizontal="true"/>
+                            android:layout_centerHorizontal="true"
+                            android:background="@drawable/uber2" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Uber"
                             android:layout_below="@id/Uber"
-                            android:layout_alignEnd="@id/Uber"/>
+                            android:layout_centerHorizontal="true"
+                            android:text="Uber" />
                     </RelativeLayout>
 
 
                 </LinearLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>
+
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nearby places"
-            android:textSize="20dp"/>
+            android:text="Top Places"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:textSize="18sp"/>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/top_places_recyclerview"
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </android.support.v7.widget.RecyclerView>
+            android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"></LinearLayout>
 
     </LinearLayout>
 
-</ScrollView>
 
-
-</android.support.constraint.ConstraintLayout>
+</android.support.v4.widget.NestedScrollView>
