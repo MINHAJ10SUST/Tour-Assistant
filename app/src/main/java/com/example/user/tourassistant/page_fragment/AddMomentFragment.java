@@ -200,13 +200,12 @@ public class AddMomentFragment extends Fragment {
                     }
                 }
 
-                Uri selectedImageUri;
                 if (isCamera) {
-                    selectedImageUri = outputFileUri;
-                    addImage.setImageURI(selectedImageUri);
+                    imageUri = outputFileUri;
+                    addImage.setImageURI(imageUri);
                 } else {
-                    selectedImageUri = data == null ? null : data.getData();
-                    addImage.setImageURI(selectedImageUri);
+                    imageUri = data == null ? null : data.getData();
+                    addImage.setImageURI(imageUri);
                 }
             }
         }

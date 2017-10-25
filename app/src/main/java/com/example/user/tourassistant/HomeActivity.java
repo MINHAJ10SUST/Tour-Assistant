@@ -254,7 +254,7 @@ public class HomeActivity extends SampleActivityBase {
                 homepageCityBt.setText(place.getName());
                 latitude=queriedLocation.latitude;
                 longitude=queriedLocation.longitude;
-                getGooglePlaceInfo("restaurant", latitude,longitude);
+                getGooglePlaceInfo("amusement_park", latitude,longitude);
                 CharSequence attributions = place.getAttributions();
 
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
