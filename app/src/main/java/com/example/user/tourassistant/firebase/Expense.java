@@ -6,13 +6,13 @@ package com.example.user.tourassistant.firebase;
 
 public class Expense {
     private  String EDetails;
-    private String Expense;
+    private double Expense;
     private String Date;
 
     public Expense() {
     }
 
-    public Expense(String EDetails, String expense, String date) {
+    public Expense(String EDetails, double expense, String date) {
         this.EDetails = EDetails;
         this.Expense = expense;
         this.Date = date;
@@ -26,11 +26,11 @@ public class Expense {
         this.EDetails = EDetails;
     }
 
-    public String getExpense() {
+    public double getExpense() {
         return this.Expense;
     }
 
-    public void setExpense(String expense) {
+    public void setExpense(double expense) {
         this.Expense = expense;
     }
 

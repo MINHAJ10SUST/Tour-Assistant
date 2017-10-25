@@ -21,8 +21,12 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.user.tourassistant.R;
+import com.example.user.tourassistant.firebase.Expense;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -67,6 +71,10 @@ public class AddExpenseFragment extends Fragment {
         // Inflate the layout for this fragment
         return view;
     }
+
+
+
+
 public void goBack(){
 
     FragmentManager fm4 = getActivity().getSupportFragmentManager();
@@ -94,13 +102,31 @@ public void goBack(){
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.saveEvent:
-                String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-                myExpenseRef = database.getReference("TExpense").child(eventkey).push();
-                myExpenseRef.child("EDetails").setValue(expense_DetailsET.getText().toString());
-                myExpenseRef.child("Expense").setValue(expense_AmountET.getText().toString());
-                myExpenseRef.child("Date").setValue(date);
+                FirebaseDatabase.getInstance().getReference().child("TExpense").child(eventkey).addListenerForSingleValueEvent(
+                        new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+                                myExpenseRef = FirebaseDatabase.getInstance().getReference().child("TExpense").child(eventkey).push();
+                                myExpenseRef.child("EDetails").setValue(expense_DetailsET.getText().toString());
+                                myExpenseRef.child("Expense").setValue(Double.parseDouble(expense_AmountET.getText().toString()));
+                                myExpenseRef.child("Date").setValue(date);
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        }
+                );
 
                 goBack();
+
+
+
+
+                //goBack();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -243,7 +243,7 @@ public class AddEventFragment extends Fragment {
                 myEventRef.child("Destination").setValue(destinationEt.getText().toString());
                 myEventRef.child("FromDate").setValue(fromDateEt.getText().toString());
                 myEventRef.child("ToDate").setValue(toDateET.getText().toString());
-                myEventRef.child("budget").setValue(budgetEt.getText().toString());
+                myEventRef.child("budget").setValue(Double.parseDouble(budgetEt.getText().toString()));
 
                 FragmentManager fm3 = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft3 = fm3.beginTransaction();

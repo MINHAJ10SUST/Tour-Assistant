@@ -113,8 +113,7 @@ public class EventFragment extends Fragment {
                 viewHolder.setEventName(model.getDestination());
                 viewHolder.setFromDate(model.getFromDate());
                 viewHolder.setToDate(model.getToDate());
-                viewHolder.setBudget(model.getBudget());
-                viewHolder.setBugetPcnt(getTotallExpense(keyid,Integer.parseInt(model.getBudget())));
+                viewHolder.setBudget(""+model.getBudget());
                 viewHolder.expenseShowBt.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -201,10 +200,7 @@ public class EventFragment extends Fragment {
             budget.setText("Aprox buget"+value);
         }
 
-        public void setBugetPcnt(int totalExpense){
-            ProgressBar budgetP=mView.findViewById(R.id.determinateBar);
-            budgetP.setProgress(totalExpense);
-        }
+
     }
 
 

@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import com.example.user.tourassistant.R;
 import com.example.user.tourassistant.firebase.Events;
 import com.example.user.tourassistant.firebase.Expense;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,11 +39,14 @@ public class ExpenseListFragment extends Fragment {
     private View view;
 
     private RecyclerView eventListView;
-    private TextView cost;
+    private TextView cost,budget;
+    private ProgressBar budgetPercent;
     private FirebaseRecyclerAdapter<Expense,EventViewHolder1> firebaseRecyclerAdapter;
     private DatabaseReference eventDatabase,userDatabase;
     FirebaseDatabase database;
     DatabaseReference myEventRef;
+    private FirebaseAuth mAuth;
+
     String eventkey;
     String keyid;
     public ExpenseListFragment() {
@@ -71,6 +76,11 @@ public class ExpenseListFragment extends Fragment {
         eventListView.setLayoutManager(llm);
 
         cost=view.findViewById(R.id.cost);
+        budget=view.findViewById(R.id.budget);
+
+
+
+
 
         // Inflate the layout for this fragment
         return view;
@@ -80,30 +90,6 @@ public class ExpenseListFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference().child("TExpense").child(eventkey);
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                int Costsum=0;
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    //Getting the data from snapshot
-                    Expense expense = postSnapshot.getValue(Expense.class);
-                    Costsum=Costsum+Integer.parseInt(expense.getExpense());
-                    //Adding it to a stringString expenses = "Amount: "+dogExpenditure.getAmount()+"\nReason for Use: "+dogExpenditure.getItem()+"\n\n";
-
-
-                }
-                cost.setText(""+Costsum);
-
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
 
 
@@ -121,12 +107,57 @@ public class ExpenseListFragment extends Fragment {
             protected void populateViewHolder(EventViewHolder1 viewHolder, Expense model, int position) {
 
                 viewHolder.setEventName(model.getEDetails());
-                viewHolder.setFromDate(model.getExpense());
+                viewHolder.setFromDate(""+model.getExpense());
                 viewHolder.setToDate(model.getDate());
 
             }
         };
         eventListView.setAdapter(firebaseRecyclerAdapter);
+
+
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference().child("TExpense").child(eventkey);
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                double Costsum= 0.0;
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    //Getting the data from snapshot
+                    Expense expense = postSnapshot.getValue(Expense.class);
+                    Costsum=Costsum+expense.getExpense();
+                    //Adding it to a stringString expenses = "Amount: "+dogExpenditure.getAmount()+"\nReason for Use: "+dogExpenditure.getItem()+"\n\n";
+
+
+                }
+                cost.setText(""+Costsum);
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        mAuth = FirebaseAuth.getInstance();
+        final FirebaseDatabase databaseBuget = FirebaseDatabase.getInstance();
+        DatabaseReference refb = databaseBuget.getReference().child("Events").child(mAuth.getCurrentUser().getUid()).child(eventkey);
+        refb.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+               Events events=dataSnapshot.getValue(Events.class);
+
+                budget.setText(""+events.getBudget());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
 
 
 
@@ -189,6 +220,8 @@ public class ExpenseListFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 
 
 

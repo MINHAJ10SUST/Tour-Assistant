@@ -8,12 +8,12 @@ public class Events {
     private String Destination;
     private String FromDate;
     private String ToDate;
-    private String budget;
+    private double budget;
 
     public Events() {
     }
 
-    public Events(String destination, String fromDate, String toDate, String budget) {
+    public Events(String destination, String fromDate, String toDate, double budget) {
         Destination = destination;
         FromDate = fromDate;
         ToDate = toDate;
@@ -44,11 +44,11 @@ public class Events {
         ToDate = toDate;
     }
 
-    public String getBudget() {
+    public double getBudget() {
         return budget;
     }
 
-    public void setBudget(String budget) {
+    public void setBudget(double budget) {
         this.budget = budget;
     }
 }
