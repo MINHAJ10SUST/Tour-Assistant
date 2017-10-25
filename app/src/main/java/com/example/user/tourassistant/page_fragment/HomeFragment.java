@@ -100,7 +100,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(Call<Example> call, Response<Example> response) {
 
-                for (int i = 0; i <10; i++) {
+                for (int i = 0; i <response.body().getResults().size(); i++) {
                     String placeName = response.body().getResults().get(i).getName();
                     String photoUrl = String.format("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + response.body().getResults().get(i).getPhotos().get(0).getPhotoReference() + "&key=AIzaSyA1GDN-skUP2mxHOAJiaJiIdpvKMKJuJEA");
                     topPlaces.add(new TopPlace(placeName,photoUrl));
@@ -125,8 +125,6 @@ public class HomeFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
 
 
 }
