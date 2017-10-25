@@ -58,7 +58,6 @@
             <!-- </intent-filter> -->
         </activity>
         <activity android:name=".google_place.AllmapActivity" />
-        <activity android:name=".MainActivity" />
 
         <service
             android:name=".GeofenceTransitionsIntentService"

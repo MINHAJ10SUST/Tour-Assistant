@@ -5,12 +5,81 @@
     tools:context="com.example.user.tourassistant.page_fragment.AlartFragment">
 
 
-    <android.support.v7.widget.RecyclerView
+  <android.support.v7.widget.CardView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="10dp">
 
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/recyclerview_expenseList2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"/>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="10dp"
+          android:orientation="vertical">
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="40dp"
+              android:background="@color/card_action"
+              >
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textSize="20dp"
+                  android:text="Geo Fence "
+                  />
+
+          </LinearLayout>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="18dp"
+              android:text="Position/place"/>
+          <TextView
+              android:id="@+id/Position"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content" />
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="18dp"
+              android:text="Latitude"/>
+          <TextView
+              android:id="@+id/GeoLat"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content" />
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="18dp"
+              android:text="Longitute"/>
+          <TextView
+              android:id="@+id/GeoLon"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content" />
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="18dp"
+              android:text="Radius"/>
+          <TextView
+              android:id="@+id/GeoRadius"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content" />
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+
+              <Button
+                  android:id="@+id/GeoChange"
+                  android:layout_width="0dp"
+                  android:layout_weight="1"
+                  android:layout_height="wrap_content"
+                  android:text="Change"/>
+
+
+          </LinearLayout>
+    </LinearLayout>
+  </android.support.v7.widget.CardView>
 
 </FrameLayout>

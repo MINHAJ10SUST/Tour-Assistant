@@ -22,8 +22,11 @@ import com.example.user.tourassistant.R;
 import com.example.user.tourassistant.firebase.Events;
 import com.example.user.tourassistant.firebase.Expense;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +37,7 @@ public class ExpenseListFragment extends Fragment {
     private View view;
 
     private RecyclerView eventListView;
+    private TextView cost;
     private FirebaseRecyclerAdapter<Expense,EventViewHolder1> firebaseRecyclerAdapter;
     private DatabaseReference eventDatabase,userDatabase;
     FirebaseDatabase database;
@@ -66,6 +70,8 @@ public class ExpenseListFragment extends Fragment {
         eventListView.setHasFixedSize(true);
         eventListView.setLayoutManager(llm);
 
+        cost=view.findViewById(R.id.cost);
+
         // Inflate the layout for this fragment
         return view;
     }
@@ -74,6 +80,32 @@ public class ExpenseListFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference().child("TExpense").child(eventkey);
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int Costsum=0;
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    //Getting the data from snapshot
+                    Expense expense = postSnapshot.getValue(Expense.class);
+                    Costsum=Costsum+Integer.parseInt(expense.getExpense());
+                    //Adding it to a stringString expenses = "Amount: "+dogExpenditure.getAmount()+"\nReason for Use: "+dogExpenditure.getItem()+"\n\n";
+
+
+                }
+                cost.setText(""+Costsum);
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
 
 
     }

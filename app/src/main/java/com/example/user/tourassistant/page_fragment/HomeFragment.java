@@ -83,6 +83,8 @@ public class HomeFragment extends Fragment {
 
         final View v = inflater.inflate(R.layout.fragment_home, container, false);
         homepageCityBt=v.findViewById(R.id.HomepageCityBt);
+        topPlaceRecyclerView = v.findViewById(R.id.top_places_recyclerview);
+
         homeImage= v.findViewById(R.id.homeImage);
         return v;
     }
@@ -97,7 +99,6 @@ public class HomeFragment extends Fragment {
         placename=sharedPref.getString("placeName","Dhaka");
 
         topPlaces = getTopPlaceInfo(placename, latitude,longitude);
-        topPlaceRecyclerView = (RecyclerView)getView().findViewById(R.id.top_places_recyclerview);
         topPlaceAdapter = new TopPlaceAdapter(getActivity(),topPlaces);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
         topPlaceRecyclerView.setLayoutManager(mLayoutManager);
@@ -108,12 +109,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 openAutocompleteActivity();
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                HomeFragment homeFragment = new HomeFragment();
-                ft.replace(R.id.homeFragmentView,homeFragment);
-                ft.addToBackStack(null);
-                ft.commit();
+
             }
         });
 
@@ -146,14 +142,11 @@ public class HomeFragment extends Fragment {
         call.enqueue(new Callback<Example>() {
             @Override
             public void onResponse(Call<Example> call, Response<Example> response) {
-                if(response.body().getResults().size()>0) {
-                    String photoUrl = String.format("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + response.body().getResults().get(0).getPhotos().get(0).getPhotoReference() + "&key=AIzaSyA1GDN-skUP2mxHOAJiaJiIdpvKMKJuJEA");
-                    Glide.with(getActivity()).load(photoUrl).asBitmap()
-                            .error(R.drawable.coxbazer).centerCrop().into(homeImage);
 
-
-                }
                 for (int i = 0; i < response.body().getResults().size(); i++) {
+                    if(i==6)
+                        break;
+
                     if(response.body().getResults().get(i).getPhotos().size()>0){
                         String placeName;
                     if(response.body().getResults().get(i).getName()==null){
@@ -165,6 +158,13 @@ public class HomeFragment extends Fragment {
                     String photoUrl = String.format("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + response.body().getResults().get(i).getPhotos().get(0).getPhotoReference() + "&key=AIzaSyA1GDN-skUP2mxHOAJiaJiIdpvKMKJuJEA");
                     topPlaces.add(new TopPlace(placeName,photoUrl));
                     }
+                }
+                if(response.body().getResults().size()>0) {
+                    String photoUrl = String.format("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + response.body().getResults().get(0).getPhotos().get(0).getPhotoReference() + "&key=AIzaSyA1GDN-skUP2mxHOAJiaJiIdpvKMKJuJEA");
+                    Glide.with(getActivity()).load(photoUrl).asBitmap()
+                            .error(R.drawable.coxbazer).centerCrop().into(homeImage);
+
+
                 }
             }
             @Override
@@ -205,7 +205,12 @@ public class HomeFragment extends Fragment {
                 editor.putFloat("longitude", (float) place.getLatLng().longitude);
                 editor.commit();
                 editor.apply();
-
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                HomeFragment homeFragment = new HomeFragment();
+                ft.replace(R.id.homeFragmentView,homeFragment);
+                ft.addToBackStack(null);
+                ft.commit();
 
             }
         }
