@@ -6,8 +6,8 @@
     <color name="colorPrimary">#313E60</color>
     <color name="colorPrimaryDark">#20324D</color>
 
-    <color name="colorAccent">#FF4081</color>
-    <color name="colorSecondary">#FF4081</color>
+    <color name="colorAccent">#20324D</color>
+    <color name="colorSecondary">#20324D</color>
     <color name="colorTransparent">#00000000</color>
     <color name="colorBlckTransparent"> #80000000</color>
 
