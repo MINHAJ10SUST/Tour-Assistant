@@ -1,5 +1,4 @@
-package com.example.user.tourassistant.google_place;
-
+package com.example.user.tourassistant;
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -12,8 +11,6 @@ import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.example.user.tourassistant.HomeActivity;
-import com.example.user.tourassistant.R;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingEvent;
 
@@ -51,7 +48,7 @@ public class GeofenceTransitionsIntentService extends IntentService {
     }
 
     private void sendNotification(String geofenceTransitionDetails) {
-        Intent notificationIntent = new Intent(getApplicationContext(), HomeActivity.class);
+        Intent notificationIntent = new Intent(getApplicationContext(),MainActivity.class);
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
         stackBuilder.addNextIntent(notificationIntent);
