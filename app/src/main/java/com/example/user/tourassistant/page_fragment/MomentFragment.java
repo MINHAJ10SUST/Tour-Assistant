@@ -128,7 +128,7 @@ public class MomentFragment extends Fragment {
                         Bundle sendKey = new Bundle();
                         sendKey.putString("EditKey", EditKey);
                         sendKey.putString("eventkey", eventkey);
-                        ft3.addToBackStack("MomentFragment");
+                       // ft3.addToBackStack("MomentFragment");
                         singleMomentFragment.setArguments(sendKey);
                         ft3.replace(R.id.homeFragmentView,singleMomentFragment);
                         ft3.commit();

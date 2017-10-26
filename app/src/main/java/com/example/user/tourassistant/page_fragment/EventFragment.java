@@ -181,24 +181,26 @@ public class EventFragment extends Fragment {
 
         public void setEventName(String value){
             TextView eventName=mView.findViewById(R.id.eventNameRow);
-            eventName.setText("Tour to "+value);
+            eventName.setText(value);
 
         }
 
         public void setFromDate(String value){
             TextView fromDate=mView.findViewById(R.id.fromDateRow);
-            fromDate.setText("Start date :"+value);
+            fromDate.setText("Start date : "+value);
         }
 
         public void setToDate(String value){
             TextView toDate=mView.findViewById(R.id.toDateRow);
-            toDate.setText("End date :"+value);
+            toDate.setText("End date : "+value);
         }
 
         public void setBudget(String value){
             TextView budget=mView.findViewById(R.id.budgetRow);
-            budget.setText("Aprox buget"+value);
+            budget.setText("Aprox buget : "+value);
         }
+
+
 
 
     }

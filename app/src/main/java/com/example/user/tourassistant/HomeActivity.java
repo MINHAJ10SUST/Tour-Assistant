@@ -216,6 +216,10 @@ public class HomeActivity extends SampleActivityBase {
             case R.id.Pharmacy:
                 intentMap.putExtra("type","pharmacy");
                 break;
+            case R.id.taxi_stand:
+                intentMap.putExtra("type","taxi_stand");
+                break;
+
 
 
         }
@@ -257,7 +261,6 @@ public class HomeActivity extends SampleActivityBase {
                 FragmentTransaction ft = fm.beginTransaction();
                 HomeFragment homeFragment = new HomeFragment();
                 ft.replace(R.id.homeFragmentView,homeFragment);
-                ft.addToBackStack(null);
                 ft.commit();
 
 

@@ -160,8 +160,8 @@ public class HomeFragment extends Fragment {
                     }
                 }
                 if(response.body().getResults().size()>0) {
-                    String photoUrl = String.format("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + response.body().getResults().get(0).getPhotos().get(0).getPhotoReference() + "&key=AIzaSyA1GDN-skUP2mxHOAJiaJiIdpvKMKJuJEA");
-                    Glide.with(getActivity()).load(photoUrl).asBitmap()
+                    String photoUrl2 = String.format("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + response.body().getResults().get(0).getPhotos().get(0).getPhotoReference() + "&key=AIzaSyA1GDN-skUP2mxHOAJiaJiIdpvKMKJuJEA");
+                    Glide.with(getActivity()).load(photoUrl2).asBitmap()
                             .error(R.drawable.coxbazer).centerCrop().into(homeImage);
 
 
@@ -209,7 +209,7 @@ public class HomeFragment extends Fragment {
                 FragmentTransaction ft = fm.beginTransaction();
                 HomeFragment homeFragment = new HomeFragment();
                 ft.replace(R.id.homeFragmentView,homeFragment);
-                ft.addToBackStack(null);
+         //       ft.addToBackStack(null);
                 ft.commit();
 
             }

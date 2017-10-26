@@ -264,18 +264,19 @@
                         android:background="#ffffff">
 
                         <ImageButton
-                            android:id="@+id/Uber"
+                            android:id="@+id/taxi_stand"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:onClick="showMapCtg"
                             android:layout_centerHorizontal="true"
                             android:background="@drawable/uber2"></ImageButton>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/Uber"
+                            android:layout_below="@id/taxi_stand"
                             android:layout_centerHorizontal="true"
-                            android:text="Uber" />
+                            android:text="Taxi stand" />
                     </RelativeLayout>
 
 

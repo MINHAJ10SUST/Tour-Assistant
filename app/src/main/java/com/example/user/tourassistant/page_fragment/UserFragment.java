@@ -36,6 +36,8 @@ public class UserFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+        getActivity().setTitle("My profile");
+
         mAuth = FirebaseAuth.getInstance();
 
         return inflater.inflate(R.layout.fragment_user, container, false);

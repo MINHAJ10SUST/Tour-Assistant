@@ -59,6 +59,7 @@ public class AlartFragment extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getActivity().setTitle("Taget place");
 
         view=inflater.inflate(R.layout.fragment_alart, container, false);
         position=view.findViewById(R.id.Position);

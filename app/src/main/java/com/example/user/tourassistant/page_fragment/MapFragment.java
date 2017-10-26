@@ -68,6 +68,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
                 .findFragmentById(R.id.mapFregment);
         mapFragment.getMapAsync((OnMapReadyCallback)getActivity());
 
+        getActivity().setTitle("Tour Assistant");
 
         type=getArguments().getString("type");
         latitude=getArguments().getFloat("latitude");

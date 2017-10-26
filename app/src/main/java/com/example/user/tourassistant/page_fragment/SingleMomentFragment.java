@@ -54,6 +54,8 @@ public class SingleMomentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().setTitle("Modify moment");
+
         EditKey=getArguments().getString("EditKey");
         eventkey=getArguments().getString("eventkey");
         mDatabase = FirebaseDatabase.getInstance().getReference().child("moments").child(eventkey).child(EditKey);

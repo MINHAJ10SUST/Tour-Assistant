@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +49,8 @@ public class ExpenseListFragment extends Fragment {
     DatabaseReference myEventRef;
     private FirebaseAuth mAuth;
 
+    private ImageButton backToEvent;
+
     String eventkey;
     String keyid;
     public ExpenseListFragment() {
@@ -78,6 +81,9 @@ public class ExpenseListFragment extends Fragment {
 
         cost=view.findViewById(R.id.cost);
         budget=view.findViewById(R.id.budget);
+        backToEvent=view.findViewById(R.id.backToEvent);
+
+
 
 
 
@@ -92,8 +98,18 @@ public class ExpenseListFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        backToEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fme = getActivity().getSupportFragmentManager();
+                FragmentTransaction fte = fme.beginTransaction();
+                EventFragment eventFragment = new EventFragment();
+                fte.replace(R.id.homeFragmentView,eventFragment);
+                fte.addToBackStack(null);
+                fte.commit();
 
-
+            }
+        });
 
     }
 
@@ -213,7 +229,7 @@ public class ExpenseListFragment extends Fragment {
                 Bundle sendKey = new Bundle();
                 sendKey.putString("eventkey", eventkey);
                 addExpenseFragment.setArguments(sendKey);
-                ft5.addToBackStack("ExpenseListFragment");
+                //ft5.addToBackStack("ExpenseListFragment");
                 ft5.replace(R.id.homeFragmentView,addExpenseFragment);
                 ft5.commit();
                 return true;

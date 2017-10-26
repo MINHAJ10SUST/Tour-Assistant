@@ -48,6 +48,9 @@ public class SingleEventFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        getActivity().setTitle("Modify event");
+
         view=inflater.inflate(R.layout.fragment_single_event, container, false);
         eventkey=getArguments().getString("eventkey");
         mAuth = FirebaseAuth.getInstance();
